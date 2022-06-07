@@ -54,9 +54,9 @@ export const MovieDetailModal: FC<Props> = ({
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h4">{data.title}</Typography>
-          <Box>
+          <Box sx={{mt: 2}}>
             {data.category.map((cat: string) => (
-              <Chip key={cat} label={cat} variant="outlined" />
+              <Chip key={cat} label={cat} variant="outlined" color="primary"/>
             ))}
           </Box>
           <TableContainer>
