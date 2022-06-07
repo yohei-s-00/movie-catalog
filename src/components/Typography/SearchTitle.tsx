@@ -8,7 +8,9 @@ type Props = {
 
 const StyleTypography = styled(Typography)({
   marginTop: '10px',
-  fontSize: '16px'
+  fontSize: '18px',
+  borderBottom: '1px solid black',
+  paddingBottom: '5px',
 })
 
 export const SearchTitle: FC<Props> = ({children}) => {

@@ -17,6 +17,9 @@ import Image from "../../images/sample_01.png";
 import PDF from "../../images/pdf/Format_6203.pdf";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { AppModal } from "./AppModal";
+import { CenterFlexBox } from "../Box/CenterFlexBox";
+import { DocumentData } from "firebase/firestore";
 
 const style = {
   position: "absolute",
@@ -34,74 +37,78 @@ type Props = {
   handleClose: () => void;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  data: DocumentData;
 };
 
-export const MovieDetailModal: FC<Props> = ({ handleClose, open, setOpen }) => {
+export const MovieDetailModal: FC<Props> = ({
+  handleClose,
+  open,
+  setOpen,
+  data,
+}) => {
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Box sx={{ display: "flex", columnGap: 4 }}>
+    <AppModal open={open} close={handleClose} width={800}>
+      <Box sx={{ display: "flex", columnGap: 4 }}>
+        <Box>
+          <img src={Image} alt="" />
+        </Box>
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography variant="h4">{data.title}</Typography>
           <Box>
-            <img src={Image} alt="" />
+            {data.category.map((cat: string) => (
+              <Chip key={cat} label={cat} variant="outlined" />
+            ))}
           </Box>
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="h4">06203[正]</Typography>
-            <Box>
-              <Chip label="YDN／YDA" variant="outlined" />
-            </Box>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center">
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <AccessTimeIcon fontSize="small" />
-                        尺
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <ViewSidebarIcon fontSize="small" />
-                        素材数
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <ViewSidebarIcon fontSize="small" />
-                        比率
-                      </Box>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="center">00:15</TableCell>
-                    <TableCell align="center">5</TableCell>
-                    <TableCell align="center">1:1</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Typography sx={{ marginTop: 2, marginBottom: 2 }} variant="body1">
-              推奨配信先
-            </Typography>
-            <Chip label="YDN／YDA" variant="outlined" />
-            <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-              <Button variant="contained">構成表ダウンロード</Button>
-          </Box>
-        </Box>
-        <Box sx={{ height: 100, marginTop: 2 }}>
-          <Typography variant="h6">特記事項</Typography>
-        </Box>
-        <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-          <Button variant="outlined" onClick={() => handleClose()}>閉じる</Button>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">
+                    <CenterFlexBox>
+                      <AccessTimeIcon fontSize="small" />尺
+                    </CenterFlexBox>
+                  </TableCell>
+                  <TableCell align="center">
+                    <CenterFlexBox>
+                      <ViewSidebarIcon fontSize="small" />
+                      素材数
+                    </CenterFlexBox>
+                  </TableCell>
+                  <TableCell align="center">
+                    <CenterFlexBox>
+                      <ViewSidebarIcon fontSize="small" />
+                      比率
+                    </CenterFlexBox>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center">{data.scale}</TableCell>
+                  <TableCell align="center">{data.remarks}</TableCell>
+                  <TableCell align="center">{data.raito}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Typography sx={{ marginTop: 2, marginBottom: 2 }} variant="body1">
+            推奨配信先
+          </Typography>
+          {data.platform.map((item: string) => (
+            <Chip key={item} label={item} variant="outlined" />
+          ))}
+          <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
+          <Button variant="contained">構成表ダウンロード</Button>
         </Box>
       </Box>
-    </Modal>
+      <Box sx={{ height: 100, marginTop: 2 }}>
+        <Typography variant="h6">特記事項</Typography>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button variant="outlined" onClick={() => handleClose()}>
+          閉じる
+        </Button>
+      </Box>
+    </AppModal>
   );
 };

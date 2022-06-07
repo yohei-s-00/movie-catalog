@@ -1,8 +1,6 @@
 import {
-  Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Typography,
@@ -12,9 +10,15 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Box } from "@mui/system";
 import Image from "../../images/sample_01.png";
 import { MovieDetailModal } from "../Modal/MovieDetailModal";
-import { useState } from "react";
+import { FC, useState } from "react";
+import { DocumentData } from "firebase/firestore";
 
-export const MovieCard = () => {
+type Props = {
+  data: DocumentData
+}
+
+export const MovieCard: FC<Props> = ({data}) => {
+  console.log(data)
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -24,7 +28,7 @@ export const MovieCard = () => {
   };
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card>
         <CardActionArea onClick={handleOpen}>
           <CardMedia
             component="img"
@@ -34,18 +38,22 @@ export const MovieCard = () => {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              06203[正]
+              {data.title}
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
               <AccessTimeIcon fontSize="small" />
-              <Typography variant="body1">0:15</Typography>
+              <Typography variant="body1">
+                {data.scale}
+              </Typography>
               <ViewSidebarIcon fontSize="small" />
-              <Typography variant="body1">5</Typography>
+              <Typography variant="body1">
+                {data.remarks}
+              </Typography>
             </Box>
           </CardContent>
         </CardActionArea>
       </Card>
-      <MovieDetailModal handleClose={handleClose} open={open} setOpen={setOpen}/>
+      <MovieDetailModal handleClose={handleClose} open={open} setOpen={setOpen} data={data}/>
     </>
   );
 };
