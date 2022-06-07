@@ -51,6 +51,9 @@ export const MovieDetailModal: FC<Props> = ({ handleClose, open, setOpen }) => {
           </Box>
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="h4">06203[正]</Typography>
+            <Box>
+              <Chip label="YDN／YDA" variant="outlined" />
+            </Box>
             <TableContainer>
               <Table>
                 <TableHead>
