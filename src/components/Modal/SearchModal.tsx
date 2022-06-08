@@ -27,7 +27,7 @@ export const SearchModal = () => {
         </Button>
         <Typography>1760件</Typography>
       </Box>
-      <AppModal open={open} close={handleClose} width={500}>
+      <AppModal open={open} close={handleClose} width={800}>
         {snapshot && 
           snapshot.docs.map((doc) => (
             <NarrowSearchBox key={doc.id} handleClose={handleClose} data={doc.data()} />
