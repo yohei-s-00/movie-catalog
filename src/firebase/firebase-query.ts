@@ -6,3 +6,8 @@ export function getMovie() {
   const ref = query(collection(firestore, "movies"));
   return ref;
 }
+
+export function getAttibutes() {
+  const ref = query(collection(firestore, "attributes"));
+  return ref;
+}

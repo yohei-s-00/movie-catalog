@@ -1,17 +1,18 @@
-import {
-  Button,
-  Box,
-  Typography,
-  FormControlLabel,
-  Checkbox,
-  Divider,
-} from "@mui/material";
+import { Button, Box, Typography } from "@mui/material";
+import { useFirestoreQuery } from "@react-query-firebase/firestore";
 import { useState } from "react";
+import { getAttibutes } from "../../firebase/firebase-query";
+import { NarrowSearchBox } from "../Search/NarrowSearchBox";
 import { SearchTitle } from "../Typography/SearchTitle";
 import { AppModal } from "./AppModal";
 
 export const SearchModal = () => {
   const [open, setOpen] = useState(false);
+
+  // Moviesのコレクションからデータ取得
+  const attributesQuery = useFirestoreQuery(["attributes"], getAttibutes());
+  const { data: snapshot, isLoading, error } = attributesQuery;
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -27,35 +28,11 @@ export const SearchModal = () => {
         <Typography>1760件</Typography>
       </Box>
       <AppModal open={open} close={handleClose} width={500}>
-        <SearchTitle>カテゴリ</SearchTitle>
-        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-          <FormControlLabel control={<Checkbox />} label="Label" />
-          <FormControlLabel control={<Checkbox />} label="Label" />
-        </Box>
-        <SearchTitle>尺</SearchTitle>
-        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-          <FormControlLabel control={<Checkbox />} label="Label" />
-          <FormControlLabel control={<Checkbox />} label="Label" />
-        </Box>
-        <SearchTitle>素材数</SearchTitle>
-        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-          <FormControlLabel control={<Checkbox />} label="Label" />
-          <FormControlLabel control={<Checkbox />} label="Label" />
-        </Box>
-        <Divider sx={{ marginTop: 3, marginBottom: 2 }} />
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box>
-            <Button variant="text">リセット</Button>
-          </Box>
-          <Box sx={{ display: "flex", columnGap: 2 }}>
-            <Button variant="outlined" onClick={() => handleClose()}>
-              キャンセル
-            </Button>
-            <Button variant="contained" onClick={() => handleClose()}>
-              検索
-            </Button>
-          </Box>
-        </Box>
+        {snapshot && 
+          snapshot.docs.map((doc) => (
+            <NarrowSearchBox key={doc.id} handleClose={handleClose} data={doc.data()} />
+          ))
+        }
       </AppModal>
     </>
   );
