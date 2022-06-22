@@ -13,8 +13,6 @@ import {
   Chip,
 } from "@mui/material";
 import { FC } from "react";
-import Image from "../../images/sample_01.png";
-import PDF from "../../images/pdf/Format_6203.pdf";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { AppModal } from "./AppModal";
