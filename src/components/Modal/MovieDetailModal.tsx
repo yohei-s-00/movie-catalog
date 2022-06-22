@@ -20,17 +20,10 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { AppModal } from "./AppModal";
 import { CenterFlexBox } from "../Box/CenterFlexBox";
 import { DocumentData } from "firebase/firestore";
+import { useStoragePath } from "../../hocks/firestorage";
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 800,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+  maxWidth: "100%",
 };
 
 type Props = {
@@ -46,17 +39,22 @@ export const MovieDetailModal: FC<Props> = ({
   setOpen,
   data,
 }) => {
+  const videoPath = useStoragePath(data.movie.src);
+  const pdfPath = useStoragePath(data.configuration.src)
   return (
-    <AppModal open={open} close={handleClose} width={800}>
+    <AppModal open={open} close={handleClose} width={900}>
       <Box sx={{ display: "flex", columnGap: 4 }}>
-        <Box>
-          <img src={Image} alt="" />
+        <Box width={500}>
+          <video style={style} controls muted>
+            <source src={videoPath} type="video/mp4" />
+            <p>Your browser doesn't support HTML5 video.</p>
+          </video>
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h4">{data.title}</Typography>
-          <Box sx={{mt: 2}}>
+          <Box sx={{ mt: 2 }}>
             {data.category.map((cat: string) => (
-              <Chip key={cat} label={cat} variant="outlined" color="primary"/>
+              <Chip key={cat} label={cat} variant="outlined" color="primary" />
             ))}
           </Box>
           <TableContainer>
@@ -98,7 +96,7 @@ export const MovieDetailModal: FC<Props> = ({
             <Chip key={item} label={item} variant="outlined" />
           ))}
           <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-          <Button variant="contained">構成表ダウンロード</Button>
+          <Button variant="contained" href={pdfPath} target="_blank">構成表ダウンロード</Button>
         </Box>
       </Box>
       <Box sx={{ height: 100, marginTop: 2 }}>

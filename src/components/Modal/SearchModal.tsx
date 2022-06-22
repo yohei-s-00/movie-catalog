@@ -25,7 +25,7 @@ export const SearchModal = () => {
         <Button variant="outlined" onClick={handleOpen}>
           絞り込み検索
         </Button>
-        <Typography>1760件</Typography>
+        {/* <Typography>1760件</Typography> */}
       </Box>
       <AppModal open={open} close={handleClose} width={800}>
         {snapshot && 

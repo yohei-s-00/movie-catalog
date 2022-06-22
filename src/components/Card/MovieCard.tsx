@@ -13,12 +13,13 @@ import { MovieDetailModal } from "../Modal/MovieDetailModal";
 import { FC, useState } from "react";
 import { DocumentData } from "firebase/firestore";
 
+
+
 type Props = {
   data: DocumentData
 }
 
 export const MovieCard: FC<Props> = ({data}) => {
-  console.log(data)
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
