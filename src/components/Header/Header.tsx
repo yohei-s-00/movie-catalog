@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, } from "@mui/material"
 import { Box } from "@mui/system"
-import { HeaderMenu } from "./HeaderMenu";
+import { HeaderMenu } from "@components/Header/HeaderMenu";
 
 export const Header = () => {
   return(

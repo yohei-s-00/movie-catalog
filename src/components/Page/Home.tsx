@@ -1,5 +1,5 @@
-import { MovieCardContainer } from "../Card/MovieCardContainer"
-import { SearchModal } from "../Modal/SearchModal"
+import { MovieCardContainer } from "@components/Card/MovieCardContainer"
+import { SearchModal } from "@components/Modal/SearchModal"
 
 export const Home = () => {
   return(

@@ -19,7 +19,8 @@
     "react-hook-form": "^7.31.3",
     "react-query": "^3.39.1",
     "react-router-dom": "6",
-    "recoil": "^0.7.3"
+    "recoil": "^0.7.3",
+    "vite-tsconfig-paths": "^3.5.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

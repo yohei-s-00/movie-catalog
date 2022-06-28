@@ -1,13 +1,15 @@
-import {
-  Button,
-  Box,
-  FormControlLabel,
-  Checkbox,
-  Divider,
-} from "@mui/material";
+import { Button, Box, Divider } from "@mui/material";
 import { DocumentData } from "firebase/firestore";
 import { FC } from "react";
-import { SearchTitle } from "../Typography/SearchTitle";
+import { SearchCheckBoxField } from "@components/Search/SearchCheckBoxField";
+import {
+  useResetSearchItem,
+  useSearchCategoriesItem,
+  useSearchPlatformsItem,
+  useSearchRaitosItem,
+  useSearchScalesItem,
+  useSetSearchItem,
+} from "@hooks/globalstate";
 
 type Props = {
   data: DocumentData;
@@ -15,46 +17,73 @@ type Props = {
 };
 
 export const NarrowSearchBox: FC<Props> = ({ data, handleClose }) => {
+  const [
+    searchCategoriesItems,
+    setSearchCategoriesItems,
+  ] = useSearchCategoriesItem();
+  const [
+    searchPlatformsItems,
+    setSearchPlatformsItems,
+  ] = useSearchPlatformsItem();
+  const [searchRaitosItems, setSearchRaitosItems] = useSearchRaitosItem();
+  const [searchScalesItems, setSearchScalesItems] = useSearchScalesItem();
+  const [item, setItems] = useSetSearchItem();
+  const resetItems = useResetSearchItem();
+  const handleReset = () => {
+    resetItems();
+  };
+  const obj = {
+    categories: searchCategoriesItems,
+    platforms: searchPlatformsItems,
+    raitos: searchRaitosItems,
+    scales: searchScalesItems,
+  };
+  const handleSearch = () => {
+    setItems({...obj});
+    handleClose();
+  };
   return (
-    <>
-      <SearchTitle>カテゴリ</SearchTitle>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        {data.categories.map((category: string) => (
-          <FormControlLabel key={category} control={<Checkbox />} label={category} />
-        ))}
-      </Box>
-      <SearchTitle>尺</SearchTitle>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        {data.scales.map((scale: string) => (
-          <FormControlLabel key={scale} control={<Checkbox />} label={scale} />
-        ))}
-      </Box>
-      <SearchTitle>比率</SearchTitle>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        {data.raitos.map((raito: string)=> (
-          <FormControlLabel key={raito} control={<Checkbox />} label={raito} />
-        ))}
-      </Box>
-      <SearchTitle>配信先</SearchTitle>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        {data.platforms.map((platform: string)=> (
-          <FormControlLabel key={platform} control={<Checkbox />} label={platform} />
-        ))}
-      </Box>
+    <Box>
+      <SearchCheckBoxField
+        label="カテゴリ"
+        options={data.categories}
+        searchItems={searchCategoriesItems}
+        setSearchItems={setSearchCategoriesItems}
+      />
+      <SearchCheckBoxField
+        label="尺"
+        options={data.scales}
+        searchItems={searchScalesItems}
+        setSearchItems={setSearchScalesItems}
+      />
+      <SearchCheckBoxField
+        label="比率"
+        options={data.raitos}
+        searchItems={searchRaitosItems}
+        setSearchItems={setSearchRaitosItems}
+      />
+      <SearchCheckBoxField
+        label="配信先"
+        options={data.platforms}
+        searchItems={searchPlatformsItems}
+        setSearchItems={setSearchPlatformsItems}
+      />
       <Divider sx={{ marginTop: 3, marginBottom: 2 }} />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
-          <Button variant="text">リセット</Button>
+          <Button variant="text" onClick={() => handleReset()}>
+            リセット
+          </Button>
         </Box>
         <Box sx={{ display: "flex", columnGap: 2 }}>
           <Button variant="outlined" onClick={() => handleClose()}>
             キャンセル
           </Button>
-          <Button variant="contained" onClick={() => handleClose()}>
+          <Button variant="contained" onClick={() => handleSearch()}>
             検索
           </Button>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };

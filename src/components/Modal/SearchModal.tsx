@@ -1,17 +1,14 @@
 import { Button, Box, Typography } from "@mui/material";
-import { useFirestoreQuery } from "@react-query-firebase/firestore";
 import { useState } from "react";
-import { getAttibutes } from "../../firebase/firebase-query";
-import { NarrowSearchBox } from "../Search/NarrowSearchBox";
+import { NarrowSearchBox } from "@components/Search/NarrowSearchBox";
 import { SearchTitle } from "../Typography/SearchTitle";
 import { AppModal } from "./AppModal";
+import { useAttibuteQuery } from "@hooks/firestore";
 
 export const SearchModal = () => {
   const [open, setOpen] = useState(false);
 
-  // Moviesのコレクションからデータ取得
-  const attributesQuery = useFirestoreQuery(["attributes"], getAttibutes());
-  const { data: snapshot, isLoading, error } = attributesQuery;
+  const { data, isLoading, error } = useAttibuteQuery();
 
   const handleOpen = () => {
     setOpen(true);
@@ -28,8 +25,8 @@ export const SearchModal = () => {
         {/* <Typography>1760件</Typography> */}
       </Box>
       <AppModal open={open} close={handleClose} width={800}>
-        {snapshot && 
-          snapshot.docs.map((doc) => (
+        {data && 
+          data.docs.map((doc) => (
             <NarrowSearchBox key={doc.id} handleClose={handleClose} data={doc.data()} />
           ))
         }

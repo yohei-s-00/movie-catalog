@@ -11,14 +11,16 @@ import {
   TableCell,
   TableBody,
   Chip,
+  CircularProgress,
 } from "@mui/material";
 import { FC } from "react";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import { AppModal } from "./AppModal";
 import { CenterFlexBox } from "../Box/CenterFlexBox";
 import { DocumentData } from "firebase/firestore";
-import { useStoragePath } from "../../hocks/firestorage";
+import { useStoragePath } from "@hooks/firestorage";
 
 const style = {
   maxWidth: "100%",
@@ -37,16 +39,29 @@ export const MovieDetailModal: FC<Props> = ({
   setOpen,
   data,
 }) => {
-  const videoPath = useStoragePath(data.movie.src);
-  const pdfPath = useStoragePath(data.configuration.src)
+  const [videoPath, { loading }] = useStoragePath(data.movie.src);
+  const [pdfPath] = useStoragePath(data.configuration.src);
   return (
     <AppModal open={open} close={handleClose} width={900}>
       <Box sx={{ display: "flex", columnGap: 4 }}>
-        <Box width={500}>
-          <video style={style} controls muted>
-            <source src={videoPath} type="video/mp4" />
-            <p>Your browser doesn't support HTML5 video.</p>
-          </video>
+        <Box width={500} height={350}>
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 200,
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <video style={style} controls muted>
+              <source src={videoPath} type="video/mp4" />
+              <p>Your browser doesn't support HTML5 video.</p>
+            </video>
+          )}
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h4">{data.title}</Typography>
@@ -72,7 +87,7 @@ export const MovieDetailModal: FC<Props> = ({
                   </TableCell>
                   <TableCell align="center">
                     <CenterFlexBox>
-                      <ViewSidebarIcon fontSize="small" />
+                      <AspectRatioIcon fontSize="small" />
                       比率
                     </CenterFlexBox>
                   </TableCell>
@@ -90,11 +105,15 @@ export const MovieDetailModal: FC<Props> = ({
           <Typography sx={{ marginTop: 2, marginBottom: 2 }} variant="body1">
             推奨配信先
           </Typography>
-          {data.platform.map((item: string) => (
-            <Chip key={item} label={item} variant="outlined" />
-          ))}
+          <Box sx={{ display: "flex", gap: 1 }}>
+            {data.platform.map((item: string) => (
+              <Chip key={item} label={item} variant="outlined" />
+            ))}
+          </Box>
           <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-          <Button variant="contained" href={pdfPath} target="_blank">構成表ダウンロード</Button>
+          <Button variant="contained" href={pdfPath} target="_blank">
+            構成表ダウンロード
+          </Button>
         </Box>
       </Box>
       <Box sx={{ height: 100, marginTop: 2 }}>

@@ -12,7 +12,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useState } from "react";
-import { AppLink } from "../Link/AppLink";
+import { AppLink } from "@components/Link/AppLink";
 
 export const HeaderMenu = () => {
   const [open, setOpen] = useState(false);

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Layout } from "../Layout/Layout";
-import { Admin } from "../Page/Admin";
-import { Home } from "../Page/Home";
+import { Layout } from "@components/Layout/Layout";
+import { Admin } from "@components/Page/Admin";
+import { Home } from "@components/Page/Home";
 
 export const RouterConfig: FC = () => {
   return (

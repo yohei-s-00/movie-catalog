@@ -3,24 +3,25 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  CircularProgress,
   Typography,
 } from "@mui/material";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Box } from "@mui/system";
-import Image from "../../images/sample_01.png";
-import { MovieDetailModal } from "../Modal/MovieDetailModal";
+import { MovieDetailModal } from "@components/Modal/MovieDetailModal";
 import { FC, useState } from "react";
 import { DocumentData } from "firebase/firestore";
-
-
+import { useStoragePath } from "@hooks/firestorage";
 
 type Props = {
-  data: DocumentData
-}
+  data: DocumentData;
+};
 
-export const MovieCard: FC<Props> = ({data}) => {
+export const MovieCard: FC<Props> = ({ data }) => {
+  
   const [open, setOpen] = useState(false);
+  const [path, { loading }] = useStoragePath(data.thumbnail);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -31,30 +32,44 @@ export const MovieCard: FC<Props> = ({data}) => {
     <>
       <Card>
         <CardActionArea onClick={handleOpen}>
-          <CardMedia
-            component="img"
-            height="200"
-            image={Image}
-            alt="green iguana"
-          />
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 200,
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <CardMedia
+              component="img"
+              height="200"
+              image={path}
+              alt="green iguana"
+            />
+          )}
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {data.title}
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
               <AccessTimeIcon fontSize="small" />
-              <Typography variant="body1">
-                {data.scale}
-              </Typography>
+              <Typography variant="body1">{data.scale}</Typography>
               <ViewSidebarIcon fontSize="small" />
-              <Typography variant="body1">
-                {data.remarks}
-              </Typography>
+              <Typography variant="body1">{data.remarks}</Typography>
             </Box>
           </CardContent>
         </CardActionArea>
       </Card>
-      <MovieDetailModal handleClose={handleClose} open={open} setOpen={setOpen} data={data}/>
+      <MovieDetailModal
+        handleClose={handleClose}
+        open={open}
+        setOpen={setOpen}
+        data={data}
+      />
     </>
   );
 };
