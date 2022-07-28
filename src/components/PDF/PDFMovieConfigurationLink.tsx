@@ -1,4 +1,4 @@
-import { Configuration } from "@components/Form/AddMovieFormContent";
+import { FormConfiguration } from "@components/Form/AddMovieFormContent";
 import { Box, Button } from "@mui/material";
 import { usePDF } from "@react-pdf/renderer";
 import { FC } from "react";
@@ -13,7 +13,7 @@ type Props = {
     scale: string;
     thumbnail: File | null | string;
     movie: File | null | string;
-    configuration: Configuration[];
+    configuration: FormConfiguration[];
   };
 };
 

@@ -1,4 +1,4 @@
-import { Configuration } from "@components/Form/AddMovieFormContent";
+import { FormConfiguration } from "@components/Form/AddMovieFormContent";
 import {
   Page,
   Text,
@@ -115,7 +115,7 @@ type Props = {
     scale: string;
     thumbnail: File | null | string;
     movie: File | null | string;
-    configuration: Configuration[];
+    configuration: FormConfiguration[];
   };
 };
 
@@ -237,8 +237,8 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                     </Text>
                   </View>
                   <Text style={styles.grayBox}>テキスト</Text>
-                  {item.textAreas.map((textArea,index) => (
-                    <View key={index}>
+                  {item.textAreas.map((textArea,i) => (
+                    <View key={i}>
                       <Text style={styles.tableCellBodyText}>
                         {textArea.name}
                       </Text>

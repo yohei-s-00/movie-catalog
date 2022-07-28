@@ -6,21 +6,31 @@ export const movieItemAtom = atom<MovieItem[]>({
     {
       id: "",
       category: [],
-      configuration: {
-        src: "",
-      },
+      configuration: [
+        {
+          scene: 0,
+          time: 0,
+          preview: "",
+          detail: "",
+          textAreas: [
+            {
+              name: "",
+              count: 0,
+            },
+          ],
+        },
+      ],
       createdAt: new Date(),
       updatedAt: new Date(),
       dlNumber: 0,
-      movie: {
-        src: "",
-      },
+      movie: "",
       platform: [],
       raito: "",
-      remarks: 0,
+      remarks: "",
       scale: "",
       thumbnail: "",
       title: "",
+      materials: 0,
     },
   ],
 });
@@ -31,21 +41,31 @@ export const currentMovieItemAtom = atom<MovieItem[]>({
     {
       id: "",
       category: [],
-      configuration: {
-        src: "",
-      },
+      configuration: [
+        {
+          scene: 0,
+          time: 0,
+          preview: "",
+          detail: "",
+          textAreas: [
+            {
+              name: "",
+              count: 0,
+            },
+          ],
+        },
+      ],
       createdAt: new Date(),
       updatedAt: new Date(),
       dlNumber: 0,
-      movie: {
-        src: "",
-      },
+      movie: "",
       platform: [],
       raito: "",
-      remarks: 0,
+      remarks: "",
       scale: "",
       thumbnail: "",
       title: "",
+      materials: 0,
     },
   ],
 });

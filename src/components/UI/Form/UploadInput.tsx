@@ -6,7 +6,7 @@ import {
   TextareaAutosizeProps,
 } from "@mui/material";
 import { ChangeEvent, ChangeEventHandler, FC, FocusEventHandler } from "react";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { FieldValues, Path, UseFormSetValue } from "react-hook-form";
 import { Image } from "../Display/Image";
 
 export type UploadInputProps = {

@@ -1,5 +1,5 @@
 import { useSteps } from "@hooks/libs";
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material";
+import { Box, Button, Step,  StepLabel, Stepper } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AddMovieConfigurationForm } from "./AddMovieConfigurationForm";
 import { AddMovieConfilmForm } from "./AddMovieConfilmForm";
@@ -13,7 +13,7 @@ import { useAddImageStorage } from "@hooks/firestorage";
 import { serverTimestamp } from "firebase/firestore";
 import { PaperContainer } from "@components/UI/Box/PaperContainer";
 
-export type Configuration = {
+export type FormConfiguration = {
   scene: number;
   time: number;
   preview: File | null | string;
@@ -32,7 +32,7 @@ export type FormValue = {
   scale: string;
   thumbnail: File | null | string;
   movie: File | null | string;
-  configuration: Configuration[];
+  configuration: FormConfiguration[];
 };
 
 const formDefaultValue: FormValue = {
@@ -83,9 +83,9 @@ export const AddMovieFormContent = () => {
     const getFilePaths = () => {
       async function getFilePath() {
         const addThumbnailFile = await storageMutate.mutateAsync(
-          data.thumbnail
+          data.thumbnail as File
         );
-        const addMovieFile = await storageMutate.mutateAsync(data.movie);
+        const addMovieFile = await storageMutate.mutateAsync(data.movie as File);
         return { thumbnail: addThumbnailFile, movie: addMovieFile };
       }
       const filePath = getFilePath().then((result) => {
@@ -93,15 +93,15 @@ export const AddMovieFormContent = () => {
       });
       return filePath;
     };
-    const addConfiguration = data.configuration.map((conf) => {
+    const addConfiguration = data.configuration.map((conf): Configuration => {
       async function getFilePath() {
-        const addFile = await storageMutate.mutateAsync(conf.preview);
+        const addFile = await storageMutate.mutateAsync(conf.preview as File);
         return addFile;
       }
       getFilePath().then((result) => {
         conf.preview = result;
       });
-      return conf;
+      return conf as Configuration;
     });
     async function mutateMovie() {
       const filePaths = await getFilePaths();
@@ -113,9 +113,10 @@ export const AddMovieFormContent = () => {
         scale: data.scale,
         thumbnail: filePaths.thumbnail,
         movie: filePaths.movie,
-        configuration: [...addConfiguration],
-        dl_number: 0,
-        remarks: 0,
+        configuration: addConfiguration,
+        dlNumber: 0,
+        materials: 0,
+        remarks: "",
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });

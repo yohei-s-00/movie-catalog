@@ -4,18 +4,20 @@ import {
   DeepMap,
   FieldError,
   FieldValues,
+  Path,
   useController,
   UseControllerProps,
   UseFormSetValue,
 } from "react-hook-form";
 import { UploadInputProps, UploadInput } from "./UploadInput";
 
-type setValue = {
-  setValue: UseFormSetValue<FormValue>
-}
+type setValue<T> = {
+  setValue: UseFormSetValue<T>;
+};
 
 export type RhfUploadInputProps<T extends FieldValues> = UploadInputProps &
-  UseControllerProps<T> & setValue;
+  UseControllerProps<T> &
+  setValue<T>;
 
 export const UploadInputField = <T extends FieldValues>(
   props: RhfUploadInputProps<T>
@@ -25,10 +27,10 @@ export const UploadInputField = <T extends FieldValues>(
     field: { ref, ...rest },
     formState: { errors },
   } = useController({ name, control });
-  const OnChangeFile: ChangeEventHandler<HTMLInputElement>= (e) => {
-    if(e.target.files){
-      const file = e.target.files[0];
-      const n = name.toString()
+  const OnChangeFile: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.files) {
+      const file: any = e.target.files[0];
+      const n = name;
       setValue(n, file);
     }
   };
