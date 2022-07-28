@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "douage-3f483"
-  }
+    "default": "douage-dev",
+    "develop": "douage-dev",
+    "production": "douage-3f483"
+  },
+  "targets": {}
 }

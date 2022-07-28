@@ -1,4 +1,7 @@
-import { useFirestoreQuery } from "@react-query-firebase/firestore";
+import {
+  useFirestoreCollectionMutation,
+  useFirestoreQuery,
+} from "@react-query-firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
 import { useMemo, useCallback } from "react";
 import { firestore } from "src/firebase/firebase";
@@ -21,4 +24,11 @@ export const useAttibuteQuery = () => {
   const q = useFirestoreQuery<Attribute>(["attributes"], ref);
   const { data, isLoading, error } = q;
   return { data, isLoading, error };
+};
+
+export const useMovieMutation = () => {
+  const ref = collection(firestore, "movies").withConverter(converter<Movie>());
+  const mutation = useFirestoreCollectionMutation(ref);
+  // const { mutation, isLoading, error } = mutation;
+  return mutation;
 };

@@ -22,7 +22,9 @@ export const Provider: FC<Props> = ({ children }) => {
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <CssBaseline />
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+          {children}
+        </ThemeProvider>
       </QueryClientProvider>
     </RecoilRoot>
   );

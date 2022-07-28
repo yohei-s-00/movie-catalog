@@ -1,8 +1,6 @@
-import { async } from "@firebase/util";
-import { movieItemAtom } from "@states/Movie/movieAtom";
+import { LoginAtom } from "@states/Auth/LoginAtom";
 import {
   searchCategoriesAtom,
-  searchItemsAtom,
   searchPlatformsAtom,
   searchRaitosAtom,
   searchScalesAtom,
@@ -11,19 +9,26 @@ import {
   searchFilterItems,
   searchListState,
 } from "@states/Search/searchSelector";
-import { collection, FirestoreError, getDocs, query } from "firebase/firestore";
+import { FirestoreError } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import {
   SetterOrUpdater,
   useRecoilState,
   useRecoilValue,
   useResetRecoilState,
-  useSetRecoilState,
 } from "recoil";
-import { firestore } from "src/firebase/firebase";
 import { useMovieQuery } from "./firestore";
 
-export const useMovieItem = (): [MovieItem[] | undefined, boolean, FirestoreError | null] => {
+export const useIsLogin = (): [boolean, SetterOrUpdater<boolean>] => {
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(LoginAtom);
+  return [isLogin, setIsLogin];
+};
+
+export const useMovieItem = (): [
+  MovieItem[] | undefined,
+  boolean,
+  FirestoreError | null
+] => {
   const [movie, setMovie] = useState<MovieItem[]>();
   const { data, isLoading, error } = useMovieQuery();
   const getItems = () => {

@@ -18,7 +18,7 @@ import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import { AppModal } from "./AppModal";
-import { CenterFlexBox } from "../Box/CenterFlexBox";
+import { CenterFlexBox } from "../UI/Box/CenterFlexBox";
 import { DocumentData } from "firebase/firestore";
 import { useStoragePath } from "@hooks/firestorage";
 
@@ -39,13 +39,13 @@ export const MovieDetailModal: FC<Props> = ({
   setOpen,
   data,
 }) => {
-  const [videoPath, { loading }] = useStoragePath(data.movie.src);
+  // const [videoPath, { loading }] = useStoragePath(data.movie);
   const [pdfPath] = useStoragePath(data.configuration.src);
   return (
     <AppModal open={open} close={handleClose} width={900}>
       <Box sx={{ display: "flex", columnGap: 4 }}>
         <Box width={500} height={350}>
-          {loading ? (
+          {/* {loading ? (
             <Box
               sx={{
                 display: "flex",
@@ -61,7 +61,7 @@ export const MovieDetailModal: FC<Props> = ({
               <source src={videoPath} type="video/mp4" />
               <p>Your browser doesn't support HTML5 video.</p>
             </video>
-          )}
+          )} */}
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h4">{data.title}</Typography>
@@ -111,9 +111,9 @@ export const MovieDetailModal: FC<Props> = ({
             ))}
           </Box>
           <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-          <Button variant="contained" href={pdfPath} target="_blank">
+          {/* <Button variant="contained" href={pdfPath} target="_blank">
             構成表ダウンロード
-          </Button>
+          </Button> */}
         </Box>
       </Box>
       <Box sx={{ height: 100, marginTop: 2 }}>

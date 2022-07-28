@@ -1,17 +1,16 @@
 import { Box, Container } from "@mui/system";
-import { FC, ReactNode } from "react"
+import { FC, ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import { Header } from "@components/Header/Header";
+import { ContentContainer } from "./ContentContainer";
 
 export const Layout = () => {
-  return(
+  return (
     <>
       <Header />
-      <Container maxWidth="lg">
-        <Box py={4}>
-          <Outlet />
-        </Box>
-      </Container>
+      <ContentContainer>
+        <Outlet />
+      </ContentContainer>
     </>
-  )
-}
+  );
+};
