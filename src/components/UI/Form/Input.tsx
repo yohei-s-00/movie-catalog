@@ -5,6 +5,7 @@ import { ChangeEventHandler, FC, FocusEventHandler } from "react";
 export type InputFieldProps = {
   label?: string;
   error?: string;
+  type?: string;
 }
 
 type Props = InputFieldProps & {
@@ -18,6 +19,7 @@ export const Input: FC<Props> = ({
   label,
   value,
   error,
+  type,
   inputRef,
   onChange,
   onBlur,
@@ -30,6 +32,7 @@ export const Input: FC<Props> = ({
         inputRef={inputRef}
         onChange={onChange}
         onBlur={onBlur}
+        type={type && type}
       />
       {error && <FormHelperText >{error}</FormHelperText>}
     </FormControl>

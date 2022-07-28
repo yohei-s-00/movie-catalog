@@ -67,7 +67,7 @@ export const LoginContainer = () => {
           <InputField name="email" label="メールアドレス" control={control} />
         </FieldBox>
         <FieldBox>
-          <InputField name="password" label="パスワード" control={control} />
+          <InputField name="password" type="password" label="パスワード" control={control} />
         </FieldBox>
         <FieldBox>
           <Button type="submit">ログイン</Button>
