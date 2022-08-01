@@ -1,12 +1,13 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
-import { useMovieQuery } from "@hooks/firestore";
 import { MovieCard } from "./MovieCard";
-import { useMovieItem, useSearchItem } from "@hooks/globalstate";
+import { useFilterMovieItem, useMovieItem } from "@hooks/globalstate";
 
 export const MovieCardContainer = () => {
-  // const [data, isLoading, error] = useMovieItem();
-  const { data, isLoading, error } = useMovieQuery()
-
+  const [data, isLoading, error] = useMovieItem();
+  // const filterItem = useFilterMovieItem()
+  // console.log(filterItem);
+  
+  
   if (isLoading) {
     return (
       <Box sx={{ display: "flex" }}>
@@ -23,12 +24,14 @@ export const MovieCardContainer = () => {
   }
   return (
     <Grid mt={2} container spacing={2}>
-      {data &&
-        data.docs.map((doc) => (
-          <Grid key={doc.id} item xs={4}>
-            <MovieCard data={doc.data()} />
+      {data.map((doc) => {
+        const { id: id, ...data } = doc;
+        return (
+          <Grid key={id} item xs={4}>
+            <MovieCard data={{id,...data}} />
           </Grid>
-        ))}
+        );
+      })}
     </Grid>
   );
 };

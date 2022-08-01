@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   DeepMap,
   FieldError,
@@ -8,7 +7,8 @@ import {
 } from "react-hook-form";
 import { Input, InputFieldProps } from "./Input";
 
-export type RhfInputProps<T extends FieldValues> = InputFieldProps & UseControllerProps<T>;
+export type RhfInputProps<T extends FieldValues> = InputFieldProps &
+  UseControllerProps<T>;
 
 export const InputField = <T extends FieldValues>(props: RhfInputProps<T>) => {
   const { name, control, label, type } = props;

@@ -41,16 +41,16 @@ export const HeaderMenu = () => {
         signOut(auth)
           .then(() => {
             console.log("ログアウトしました");
-            setIsLogin(false)
-            navigation("/",{ replace: true });
+            setIsLogin(false);
+            navigation("/", { replace: true });
           })
           .catch((error) => {
             console.log(error);
           });
       } else {
         console.log("既にログアウトしています");
-        setIsLogin(false)
-        navigation("/",{ replace: true });
+        setIsLogin(false);
+        navigation("/", { replace: true });
       }
     });
   };
@@ -69,9 +69,9 @@ export const HeaderMenu = () => {
       <Drawer open={open} onClose={handleClose}>
         <Box sx={{ width: 250 }}>
           <List>
-            {MenuListItems.map((item, i) => (
-              <>
-                {item.name !== "Admin" && (
+            {MenuListItems.map((item, i) => {
+              if (item.name !== "Admin") {
+                return (
                   <ListItem key={i} disablePadding>
                     <AppLink to={item.path}>
                       <ListItemButton onClick={() => handleClose()}>
@@ -80,8 +80,9 @@ export const HeaderMenu = () => {
                       </ListItemButton>
                     </AppLink>
                   </ListItem>
-                )}
-                {isLogin && item.name === "Admin" && (
+                );
+              } else if (isLogin && item.name === "Admin") {
+                return (
                   <ListItem key={i} disablePadding>
                     <AppLink to={item.path}>
                       <ListItemButton onClick={() => handleClose()}>
@@ -90,9 +91,10 @@ export const HeaderMenu = () => {
                       </ListItemButton>
                     </AppLink>
                   </ListItem>
-                )}
-              </>
-            ))}
+                );
+              }
+            })}
+
             {isLogin && (
               <ListItem disablePadding>
                 <ListItemButton onClick={() => handleLogout()}>

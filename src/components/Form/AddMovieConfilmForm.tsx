@@ -47,26 +47,34 @@ export const AddMovieConfilmForm: FC<Props> = ({ handleSubmit, getValues }) => {
               </TableCell>
               <TableCell align="center">
                 {formValue.category.length &&
-                  formValue.category.map((cat) => (
-                    <Chip
-                      key={cat}
-                      label={cat}
-                      variant="outlined"
-                      color="primary"
-                    />
-                  ))}
+                  formValue.category.map((cat) => {
+                    if (cat) {
+                      return (
+                        <Chip
+                          key={cat}
+                          label={cat}
+                          variant="outlined"
+                          color="primary"
+                        />
+                      );
+                    }
+                  })}
               </TableCell>
               <TableCell align="center">
                 {formValue.platform.length &&
-                  formValue.platform.map((item) => (
-                    <Chip key={item} label={item} variant="outlined" />
-                  ))}
+                  formValue.platform.map((item) => {
+                    if (item) {
+                      return (
+                        <Chip key={item} label={item} variant="outlined" />
+                      );
+                    }
+                  })}
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-      <PDFMovieConfigurationLink formValue={formValue} />
+      <PDFMovieConfigurationLink title="PDFを確認する" PDFValue={formValue} />
     </AddMovieFormWrapper>
   );
 };

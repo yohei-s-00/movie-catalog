@@ -1,10 +1,8 @@
-import { FormValue } from "@components/Form/AddMovieFormContent";
-import { ChangeEvent, ChangeEventHandler, FC } from "react";
+import { ChangeEventHandler } from "react";
 import {
   DeepMap,
   FieldError,
   FieldValues,
-  Path,
   useController,
   UseControllerProps,
   UseFormSetValue,

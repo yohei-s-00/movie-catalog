@@ -19,7 +19,6 @@ export const DashBoardPaper: FC<Props> = ({ title, text, to }) => {
         borderLeft: 8,
         borderLeftColor: "green",
       }}
-      elevation={5}
       variant="outlined"
     >
       <AppLink to={to}>

@@ -1,72 +1,61 @@
 import { Button, Box, Divider } from "@mui/material";
-import { DocumentData } from "firebase/firestore";
 import { FC } from "react";
-import { SearchCheckBoxField } from "@components/Search/SearchCheckBoxField";
-import {
-  useResetSearchItem,
-  useSearchCategoriesItem,
-  useSearchPlatformsItem,
-  useSearchRaitosItem,
-  useSearchScalesItem,
-  useSetSearchItem,
-} from "@hooks/globalstate";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { ChechBoxsField } from "@components/UI/Form/ChechBoxsField";
 
 type Props = {
-  data: DocumentData;
+  data: Attribute;
   handleClose: () => void;
 };
 
+const initValue: Attribute = {
+  categories: [],
+  platforms: [],
+  raitos: [],
+  scales: []
+}
+
 export const NarrowSearchBox: FC<Props> = ({ data, handleClose }) => {
-  const [
-    searchCategoriesItems,
-    setSearchCategoriesItems,
-  ] = useSearchCategoriesItem();
-  const [
-    searchPlatformsItems,
-    setSearchPlatformsItems,
-  ] = useSearchPlatformsItem();
-  const [searchRaitosItems, setSearchRaitosItems] = useSearchRaitosItem();
-  const [searchScalesItems, setSearchScalesItems] = useSearchScalesItem();
-  const [item, setItems] = useSetSearchItem();
-  const resetItems = useResetSearchItem();
+  const {
+    control,
+    handleSubmit,
+    setError,
+    setValue,
+    getValues,
+    watch,
+    reset,
+    formState: { isValid },
+  } = useForm({
+    mode: "onSubmit",
+    defaultValues: initValue,
+  });
   const handleReset = () => {
-    resetItems();
+    reset();
   };
-  const obj = {
-    categories: searchCategoriesItems,
-    platforms: searchPlatformsItems,
-    raitos: searchRaitosItems,
-    scales: searchScalesItems,
-  };
-  const handleSearch = () => {
-    setItems({...obj});
-    handleClose();
+  const handleSearch: SubmitHandler<Attribute> = (data) => {
+    console.log(data);
   };
   return (
-    <Box>
-      <SearchCheckBoxField
+    <form onSubmit={handleSubmit(handleSearch)}>
+      <ChechBoxsField
         label="カテゴリ"
-        options={data.categories}
-        searchItems={searchCategoriesItems}
-        setSearchItems={setSearchCategoriesItems}
+        name="categories"
+        items={data.categories}
       />
-      <SearchCheckBoxField
+      <ChechBoxsField
         label="尺"
-        options={data.scales}
-        searchItems={searchScalesItems}
-        setSearchItems={setSearchScalesItems}
+        name="scales"
+        items={data.scales}
       />
-      <SearchCheckBoxField
+      <ChechBoxsField
         label="比率"
-        options={data.raitos}
-        searchItems={searchRaitosItems}
-        setSearchItems={setSearchRaitosItems}
+        name="raitos"
+        items={data.raitos}
       />
-      <SearchCheckBoxField
+      <ChechBoxsField
         label="配信先"
-        options={data.platforms}
-        searchItems={searchPlatformsItems}
-        setSearchItems={setSearchPlatformsItems}
+        name="platforms"
+        items={data.platforms}
       />
       <Divider sx={{ marginTop: 3, marginBottom: 2 }} />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -79,11 +68,11 @@ export const NarrowSearchBox: FC<Props> = ({ data, handleClose }) => {
           <Button variant="outlined" onClick={() => handleClose()}>
             キャンセル
           </Button>
-          <Button variant="contained" onClick={() => handleSearch()}>
+          <Button variant="contained" type="submit">
             検索
           </Button>
         </Box>
       </Box>
-    </Box>
+    </form>
   );
 };

@@ -152,7 +152,7 @@ export const AddMovieConfigurationForm: FC<Props> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <Button onClick={() => handelAppend()}>
+      <Button sx={{mt: 2}} variant="outlined" onClick={() => handelAppend()}>
         <AddBoxIcon />
         行を追加
       </Button>

@@ -11,6 +11,7 @@ import {
 import { FC } from "react";
 import NasuRegular from "../../public/font/Nasu-Regular.ttf";
 import NasuBold from "../../public/font/Nasu-Bold.ttf";
+import { PDFImage } from "./PDFImage";
 
 Font.register({
   family: "Nasu-Regular",
@@ -189,7 +190,9 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
         >
           <Text>推奨配信先：</Text>
           {platform.map((item) => (
-            <Text style={styles.grayBox} key={item}>{item}</Text>
+            <Text style={styles.grayBox} key={item}>
+              {item}
+            </Text>
           ))}
         </View>
         <View style={styles.table}>
@@ -210,7 +213,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
             </View>
           </View>
           <View style={styles.tableCellBody}>
-            {configuration.map((item,index) => (
+            {configuration.map((item, index) => (
               <View key={index} style={styles.tableRow} wrap={false}>
                 <View style={styles.tableCellSmall}>
                   <Text style={styles.tableCellBodyText}>{item.scene}</Text>
@@ -219,12 +222,17 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                   <Text style={styles.tableCellBodyText}>{item.time}秒間</Text>
                 </View>
                 <View style={styles.tableCell}>
-                  {item.preview && (
-                    <Image
-                      style={{ maxWidth: "100%" }}
-                      src={window.URL.createObjectURL(new Blob([item.preview]))}
-                    />
-                  )}
+                  {item.preview &&
+                    (typeof item.preview === "string" ? (
+                      <PDFImage src={item.preview} />
+                    ) : (
+                      <Image
+                        style={{ maxWidth: "100%" }}
+                        src={window.URL.createObjectURL(
+                          new Blob([item.preview])
+                        )}
+                      />
+                    ))}
                 </View>
                 <View style={styles.tableCell}>
                   <Text style={styles.grayBox}>画像・動画</Text>
@@ -237,7 +245,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                     </Text>
                   </View>
                   <Text style={styles.grayBox}>テキスト</Text>
-                  {item.textAreas.map((textArea,i) => (
+                  {item.textAreas.map((textArea, i) => (
                     <View key={i}>
                       <Text style={styles.tableCellBodyText}>
                         {textArea.name}

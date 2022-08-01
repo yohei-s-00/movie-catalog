@@ -1,12 +1,6 @@
-import {
-  FormControl,
-  FormLabel,
-  InputLabel,
-  MenuItem,
-  SelectChangeEvent,
-} from "@mui/material";
-import MUISelect, { SelectProps } from "@mui/material/Select/Select";
-import { FC, ReactNode, useState } from "react";
+import { FormControl, FormLabel, MenuItem } from "@mui/material";
+import MUISelect from "@mui/material/Select/Select";
+import { FC } from "react";
 
 export type SlectFieldProps = {
   label?: string;

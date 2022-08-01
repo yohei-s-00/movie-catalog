@@ -11,11 +11,10 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Box } from "@mui/system";
 import { MovieDetailModal } from "@components/Modal/MovieDetailModal";
 import { FC, useState } from "react";
-import { DocumentData } from "firebase/firestore";
 import { useStoragePath } from "@hooks/firestorage";
 
 type Props = {
-  data: DocumentData;
+  data: MovieItem;
 };
 
 export const MovieCard: FC<Props> = ({ data }) => {

@@ -63,7 +63,7 @@ export const UploadInput: FC<Props> = ({
             />
           )
         ) : (
-          <Button variant="contained" component="span">
+          <Button variant="outlined" component="span">
             ファイルを選択
           </Button>
         )}

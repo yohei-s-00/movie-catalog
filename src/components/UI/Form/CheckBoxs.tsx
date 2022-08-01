@@ -22,10 +22,12 @@ export const CheckBoxs: FC<Props> = ({ items, label, onChange, value }) => {
   const handleChenge = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     const valueCopy = [...values];
     valueCopy[index] = e.target.checked ? e.target.value : null;
-    const filterValue = valueCopy.filter((val) => {
-      return val !== undefined;
+    const filterValue = valueCopy.map((val) => {
+      if(val === undefined){
+        return null
+      }
+      return val;
     });
-    console.log(filterValue);
     onChange(filterValue);
     setValues(filterValue);
   };

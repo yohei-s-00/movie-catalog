@@ -13,7 +13,6 @@ export const useMovieQuery = () => {
   );
   const q = useFirestoreQuery<Movie>(["movies"], ref);
   const { data, isLoading, error } = q;
-
   return { data, isLoading, error };
 };
 

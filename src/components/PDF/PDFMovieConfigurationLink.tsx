@@ -5,7 +5,8 @@ import { FC } from "react";
 import { PDFMovieConfiguration } from "./PDFMovieConfiguration";
 
 type Props = {
-  formValue: {
+  title: string;
+  PDFValue: {
     title: string;
     category: string[];
     platform: string[];
@@ -17,9 +18,9 @@ type Props = {
   };
 };
 
-export const PDFMovieConfigurationLink: FC<Props> = ({ formValue }) => {
+export const PDFMovieConfigurationLink: FC<Props> = ({ title,PDFValue }) => {
   const [instance, updateInstance] = usePDF({
-    document: <PDFMovieConfiguration formValue={formValue} />,
+    document: <PDFMovieConfiguration formValue={PDFValue} />,
   });
   
   if (instance.loading) return <div>Loading ...</div>;
@@ -29,7 +30,7 @@ export const PDFMovieConfigurationLink: FC<Props> = ({ formValue }) => {
     <Box>
       {instance.url && (
         <Button href={instance.url} target="_blank">
-          PDF
+          {title}
         </Button>
       )}
     </Box>

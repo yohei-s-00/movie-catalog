@@ -21,6 +21,7 @@ import { AppModal } from "./AppModal";
 import { CenterFlexBox } from "../UI/Box/CenterFlexBox";
 import { DocumentData } from "firebase/firestore";
 import { useStoragePath } from "@hooks/firestorage";
+import { PDFMovieConfigurationLink } from "@components/PDF/PDFMovieConfigurationLink";
 
 const style = {
   maxWidth: "100%",
@@ -30,7 +31,7 @@ type Props = {
   handleClose: () => void;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  data: DocumentData;
+  data: MovieItem;
 };
 
 export const MovieDetailModal: FC<Props> = ({
@@ -39,13 +40,13 @@ export const MovieDetailModal: FC<Props> = ({
   setOpen,
   data,
 }) => {
-  // const [videoPath, { loading }] = useStoragePath(data.movie);
-  const [pdfPath] = useStoragePath(data.configuration.src);
+  const [videoPath, { loading }] = useStoragePath(data.movie);
+
   return (
     <AppModal open={open} close={handleClose} width={900}>
       <Box sx={{ display: "flex", columnGap: 4 }}>
         <Box width={500} height={350}>
-          {/* {loading ? (
+          {loading ? (
             <Box
               sx={{
                 display: "flex",
@@ -61,7 +62,7 @@ export const MovieDetailModal: FC<Props> = ({
               <source src={videoPath} type="video/mp4" />
               <p>Your browser doesn't support HTML5 video.</p>
             </video>
-          )} */}
+          )}
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h4">{data.title}</Typography>
@@ -111,9 +112,10 @@ export const MovieDetailModal: FC<Props> = ({
             ))}
           </Box>
           <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-          {/* <Button variant="contained" href={pdfPath} target="_blank">
-            構成表ダウンロード
-          </Button> */}
+            <PDFMovieConfigurationLink
+              title="構成表ダウンロード"
+              PDFValue={data}
+            />
         </Box>
       </Box>
       <Box sx={{ height: 100, marginTop: 2 }}>

@@ -1,22 +1,10 @@
 import { LoginAtom } from "@states/Auth/LoginAtom";
-import {
-  searchCategoriesAtom,
-  searchPlatformsAtom,
-  searchRaitosAtom,
-  searchScalesAtom,
-} from "@states/Search/searchAtom";
-import {
-  searchFilterItems,
-  searchListState,
-} from "@states/Search/searchSelector";
+import { movieItemAtom } from "@states/Movie/movieAtom";
+import { filterMovieState } from "@states/Movie/movieSelector";
 import { FirestoreError } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import {
-  SetterOrUpdater,
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-} from "recoil";
+
+import { SetterOrUpdater, useRecoilState, useRecoilValue } from "recoil";
 import { useMovieQuery } from "./firestore";
 
 export const useIsLogin = (): [boolean, SetterOrUpdater<boolean>] => {
@@ -25,72 +13,28 @@ export const useIsLogin = (): [boolean, SetterOrUpdater<boolean>] => {
 };
 
 export const useMovieItem = (): [
-  MovieItem[] | undefined,
+  MovieItem[],
   boolean,
   FirestoreError | null
 ] => {
-  const [movie, setMovie] = useState<MovieItem[]>();
   const { data, isLoading, error } = useMovieQuery();
-  const getItems = () => {
-    data?.docs.map((doc) => {
-      setMovie([{ id: doc.id, ...doc.data() }]);
-    });
-  };
-  getItems();
-  return [movie, isLoading, error];
+  const [loading,setLoading] = useState(isLoading)
+  const [moveiItem, setMovieItem] = useRecoilState(movieItemAtom);
+  useEffect(() => {
+    if(data){
+      const movie = data.docs.map((doc) => {
+        const id = doc.id
+        const item = doc.data()
+        return {id: id ,...item}
+      })
+      setMovieItem(movie)
+      setLoading(false)
+    }
+  },[isLoading])
+  return [moveiItem, loading, error];
 };
 
-export const useSearchCategoriesItem = (): [
-  string[],
-  SetterOrUpdater<string[]>
-] => {
-  const [searchCategoriesItems, setSearchCategoriesItems] = useRecoilState(
-    searchCategoriesAtom
-  );
-  return [searchCategoriesItems, setSearchCategoriesItems];
-};
-
-export const useSearchPlatformsItem = (): [
-  string[],
-  SetterOrUpdater<string[]>
-] => {
-  const [searchPlatformsItems, setSearchPlatformsItems] = useRecoilState(
-    searchPlatformsAtom
-  );
-  return [searchPlatformsItems, setSearchPlatformsItems];
-};
-
-export const useSearchRaitosItem = (): [
-  string[],
-  SetterOrUpdater<string[]>
-] => {
-  const [searchRaitosItems, setSearchRaitosItems] = useRecoilState(
-    searchRaitosAtom
-  );
-  return [searchRaitosItems, setSearchRaitosItems];
-};
-
-export const useSearchScalesItem = (): [
-  string[],
-  SetterOrUpdater<string[]>
-] => {
-  const [searchScalesItems, setSearchScalesItems] = useRecoilState(
-    searchScalesAtom
-  );
-  return [searchScalesItems, setSearchScalesItems];
-};
-
-export const useResetSearchItem = () => {
-  const resetItems = useResetRecoilState(searchListState);
-  return resetItems;
-};
-export const useSetSearchItem = (): [Attribute, SetterOrUpdater<Attribute>] => {
-  const [item, setItems] = useRecoilState(searchListState);
-  return [item, setItems];
-};
-
-export const useSearchItem = () => {
-  const searchItem = useRecoilValue(searchFilterItems);
-
-  return searchItem;
+export const useFilterMovieItem = () => {
+  const moveiItem = useRecoilValue(filterMovieState);
+  return moveiItem;
 };

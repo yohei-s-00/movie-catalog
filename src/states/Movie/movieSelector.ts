@@ -1,14 +1,23 @@
-import { collection, getDocs } from "firebase/firestore";
-import { DefaultValue, selector } from "recoil";
-import { firestore } from "src/firebase/firebase";
+import { searchItemsAtom } from "@states/Search/searchAtom";
+import { selector } from "recoil";
+import { movieItemAtom } from "./movieAtom";
 
-export const movieItemState = selector({
-  key: "movieItem",
-  get: async ({ get }) => {
-    const ref = collection(firestore, "movie");
-    const response = await getDocs(ref).then((querySnapshot) => {
-      querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+type isIncludes = {
+  <T>(arr: Array<T>, target: Array<T>): boolean;
+};
+
+const isIncludes: isIncludes = (arr, target) =>
+  arr.some((el) => target.includes(el));
+
+export const filterMovieState = selector({
+  key: "filterMovie",
+  get: ({ get }) => {
+    get(movieItemAtom).filter((item) => {
+      const searchQuery = get(searchItemsAtom);
+      isIncludes(searchQuery.categories, item.category) &&
+        isIncludes(searchQuery.platforms, item.platform) &&
+        searchQuery.raitos.includes(item.raito) &&
+        searchQuery.scales.includes(item.scale);
     });
-    return response;
   },
 });
