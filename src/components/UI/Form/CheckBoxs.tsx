@@ -26,6 +26,9 @@ export const CheckBoxs: FC<Props> = ({ items, label, onChange, value }) => {
       if(val === undefined){
         return null
       }
+      if(val === ''){
+        return null
+      }
       return val;
     });
     onChange(filterValue);
@@ -43,7 +46,7 @@ export const CheckBoxs: FC<Props> = ({ items, label, onChange, value }) => {
               <Checkbox
                 value={item}
                 onChange={(e) => handleChenge(e, index)}
-                checked={values.includes(item)}
+                checked={value.includes(item)}
               />
             }
           />

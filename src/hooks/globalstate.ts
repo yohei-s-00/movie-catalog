@@ -1,6 +1,7 @@
 import { LoginAtom } from "@states/Auth/LoginAtom";
 import { movieItemAtom } from "@states/Movie/movieAtom";
 import { filterMovieState } from "@states/Movie/movieSelector";
+import { searchItemsAtom } from "@states/Search/searchAtom";
 import { FirestoreError } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -18,23 +19,28 @@ export const useMovieItem = (): [
   FirestoreError | null
 ] => {
   const { data, isLoading, error } = useMovieQuery();
-  const [loading,setLoading] = useState(isLoading)
+  const [loading, setLoading] = useState(isLoading);
   const [moveiItem, setMovieItem] = useRecoilState(movieItemAtom);
   useEffect(() => {
-    if(data){
+    if (data) {
       const movie = data.docs.map((doc) => {
-        const id = doc.id
-        const item = doc.data()
-        return {id: id ,...item}
-      })
-      setMovieItem(movie)
-      setLoading(false)
+        const id = doc.id;
+        const item = doc.data();
+        return { id: id, ...item };
+      });
+      setMovieItem(movie);
+      setLoading(false);
     }
-  },[isLoading])
+  }, [isLoading]);
   return [moveiItem, loading, error];
 };
 
 export const useFilterMovieItem = () => {
   const moveiItem = useRecoilValue(filterMovieState);
   return moveiItem;
+};
+
+export const useSearchQuery = (): [Attribute, SetterOrUpdater<Attribute>] => {
+  const [searchItem, setSearchItem] = useRecoilState(searchItemsAtom);
+  return [searchItem, setSearchItem];
 };

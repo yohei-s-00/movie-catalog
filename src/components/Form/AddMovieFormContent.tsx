@@ -112,8 +112,8 @@ export const AddMovieFormContent = () => {
       const filePaths = await getFilePaths();
       mutation.mutateAsync({
         title: data.title,
-        category: data.category,
-        platform: data.platform,
+        category: data.category.filter((item)=> item !== null),
+        platform: data.platform.filter((item)=> item !== null),
         raito: data.raito,
         scale: data.scale,
         thumbnail: filePaths.thumbnail,

@@ -11,13 +11,37 @@ const isIncludes: isIncludes = (arr, target) =>
 
 export const filterMovieState = selector({
   key: "filterMovie",
-  get: ({ get }) => {
+  get: ({ get }) =>
     get(movieItemAtom).filter((item) => {
       const searchQuery = get(searchItemsAtom);
-      isIncludes(searchQuery.categories, item.category) &&
-        isIncludes(searchQuery.platforms, item.platform) &&
-        searchQuery.raitos.includes(item.raito) &&
-        searchQuery.scales.includes(item.scale);
-    });
-  },
+      function searchMovie() {
+        let search = true;
+        if (searchQuery.categories.length) {
+          search = isIncludes(searchQuery.categories, item.category);
+          if (search === false) {
+            return false;
+          }
+        }
+        if (searchQuery.platforms.length) {
+          search = isIncludes(searchQuery.platforms, item.platform);
+          if (search === false) {
+            return false;
+          }
+        }
+        if (searchQuery.raitos.length) {
+          search = searchQuery.raitos.includes(item.raito);
+          if (search === false) {
+            return false;
+          }
+        }
+        if (searchQuery.scales.length) {
+          search = searchQuery.scales.includes(item.scale);
+          if (search === false) {
+            return false;
+          }
+        }
+        return search;
+      }
+      return searchMovie();
+    }),
 });

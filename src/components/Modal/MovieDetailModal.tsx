@@ -107,15 +107,17 @@ export const MovieDetailModal: FC<Props> = ({
             推奨配信先
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            {data.platform.map((item: string) => (
-              <Chip key={item} label={item} variant="outlined" />
-            ))}
+            {data.platform.map((item: string) => {
+              if (item) {
+                return <Chip key={item} label={item} variant="outlined" />;
+              }
+            })}
           </Box>
           <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
-            <PDFMovieConfigurationLink
-              title="構成表ダウンロード"
-              PDFValue={data}
-            />
+          <PDFMovieConfigurationLink
+            title="構成表ダウンロード"
+            PDFValue={data}
+          />
         </Box>
       </Box>
       <Box sx={{ height: 100, marginTop: 2 }}>

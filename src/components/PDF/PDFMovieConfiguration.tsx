@@ -189,11 +189,15 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
           }}
         >
           <Text>推奨配信先：</Text>
-          {platform.map((item) => (
-            <Text style={styles.grayBox} key={item}>
-              {item}
-            </Text>
-          ))}
+          {platform.map((item) => {
+            if (item) {
+              return (
+                <Text style={styles.grayBox} key={item}>
+                  {item}
+                </Text>
+              );
+            }
+          })}
         </View>
         <View style={styles.table}>
           <View style={styles.tableCellHeader}>
