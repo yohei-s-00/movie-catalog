@@ -34,16 +34,16 @@ export const MovieCardContainer = () => {
       </Grid>
     );
   }
-  // return (
-  //   <Grid mt={2} container spacing={2}>
-  //     {data.map((doc) => {
-  //       const { id: id, ...data } = doc;
-  //       return (
-  //         <Grid key={id} item xs={4}>
-  //           <MovieCard data={{ id, ...data }} />
-  //         </Grid>
-  //       );
-  //     })}
-  //   </Grid>
-  // );
+  return (
+    <Grid mt={2} container spacing={2}>
+      {data.map((doc) => {
+        const { id: id, ...data } = doc;
+        return (
+          <Grid key={id} item xs={4}>
+            <MovieCard data={{ id, ...data }} />
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
 };
