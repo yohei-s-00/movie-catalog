@@ -23,10 +23,10 @@ export const SearchModal = () => {
           絞り込み検索
         </Button>
         <Box>
-          {searchItem.categories.map((item) => <Chip key={item} label={item} variant="outlined" color="primary" />)}
-          {searchItem.platforms.map((item) => <Chip key={item} label={item} variant="outlined" color="primary" />)}
-          {searchItem.raitos.map((item) => <Chip key={item} label={item} variant="outlined" color="primary" />)}
-          {searchItem.scales.map((item) => <Chip key={item} label={item} variant="outlined" color="primary" />)}
+          {searchItem.categories.map((item) => item && <Chip key={item} label={item} variant="outlined" color="primary" />)}
+          {searchItem.platforms.map((item) => item && <Chip key={item} label={item} variant="outlined" color="primary" />)}
+          {searchItem.raitos.map((item) => item && <Chip key={item} label={item} variant="outlined" color="primary" />)}
+          {searchItem.scales.map((item) =>  item && <Chip key={item} label={item} variant="outlined" color="primary" />)}
         </Box>
       </Box>
       <AppModal open={open} close={handleClose} width={800}>
