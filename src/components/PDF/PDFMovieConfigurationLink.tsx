@@ -9,7 +9,6 @@ import { PDFMovieConfiguration } from "./PDFMovieConfiguration";
 type Props = {
   title: string;
   PDFValue: {
-    id: string;
     title: string;
     category: string[];
     platform: string[];
@@ -37,7 +36,6 @@ export const PDFMovieConfigurationLink: FC<Props> = ({
   });
   const handleIncrement = () => {
     if (mutate) {
-      const id = PDFValue.id
       mutate({
         dlNumber: increment(1),
       });
