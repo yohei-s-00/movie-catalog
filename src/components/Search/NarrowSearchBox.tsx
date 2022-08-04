@@ -1,14 +1,15 @@
 import { Button, Box, Divider } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ChechBoxsField } from "@components/UI/Form/ChechBoxsField";
-import { useSearchQuery } from "@hooks/globalstate";
+import { useSearchQuery, useSearchQueryReset } from "@hooks/globalstate";
 import { SetterOrUpdater } from "recoil";
 
 type Props = {
   data: Attribute;
   handleClose: () => void;
-  setSearchItem: SetterOrUpdater<Attribute>
+  searchItem: Attribute;
+  setSearchItem: SetterOrUpdater<Attribute>;
 };
 
 const initValue: Attribute = {
@@ -18,28 +19,44 @@ const initValue: Attribute = {
   scales: [],
 };
 
-export const NarrowSearchBox: FC<Props> = ({ data, handleClose, setSearchItem }) => {
-  
+export const NarrowSearchBox: FC<Props> = ({
+  data,
+  handleClose,
+  searchItem,
+  setSearchItem,
+}) => {
+
+  const defaultValues = useMemo(() => {
+    return {
+      ...searchItem,
+    };
+  }, [searchItem]);
+
   const {
     control,
     handleSubmit,
-    setError,
-    setValue,
-    getValues,
-    watch,
     reset,
     formState: { isValid },
   } = useForm({
     mode: "onSubmit",
-    defaultValues: initValue,
+    defaultValues: defaultValues,
   });
+
   const handleReset = () => {
     reset();
+    setSearchItem(initValue);
+    console.log(searchItem);
   };
+
   const handleSearch: SubmitHandler<Attribute> = (data) => {
     setSearchItem(data);
-    handleClose()
+    handleClose();
   };
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
+
   return (
     <form onSubmit={handleSubmit(handleSearch)}>
       <ChechBoxsField

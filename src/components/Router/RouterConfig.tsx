@@ -17,6 +17,7 @@ export const RouterConfig: FC = () => {
             <Route path="admin">
               <Route index　element={<Admin />} />
               <Route path="addContent" element={<AddContent />}/>
+              <Route path="editContent" element={<AddContent />}/>
             </Route>
           </Route>
         </Routes>

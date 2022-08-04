@@ -32,7 +32,7 @@ export const SearchModal = () => {
       <AppModal open={open} close={handleClose} width={800}>
         {data && 
           data.docs.map((doc) => (
-            <NarrowSearchBox key={doc.id} handleClose={handleClose} data={doc.data()} setSearchItem={setSearchItem} />
+            <NarrowSearchBox key={doc.id} handleClose={handleClose} data={doc.data()} setSearchItem={setSearchItem} searchItem={searchItem}/>
           ))
         }
       </AppModal>

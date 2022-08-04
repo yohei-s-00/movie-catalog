@@ -19,9 +19,9 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import { AppModal } from "./AppModal";
 import { CenterFlexBox } from "../UI/Box/CenterFlexBox";
-import { DocumentData } from "firebase/firestore";
 import { useStoragePath } from "@hooks/firestorage";
 import { PDFMovieConfigurationLink } from "@components/PDF/PDFMovieConfigurationLink";
+import { useUpdateMovieMutation } from "@hooks/firestore";
 
 const style = {
   maxWidth: "100%",
@@ -41,9 +41,10 @@ export const MovieDetailModal: FC<Props> = ({
   data,
 }) => {
   const [videoPath, { loading }] = useStoragePath(data.movie);
+  const mutation = useUpdateMovieMutation(data.id)
 
   return (
-    <AppModal open={open} close={handleClose} width={900}>
+    <AppModal open={open} close={handleClose} width={900}>ß
       <Box sx={{ display: "flex", columnGap: 4 }}>
         <Box width={500} height={350}>
           {loading ? (
@@ -117,6 +118,7 @@ export const MovieDetailModal: FC<Props> = ({
           <PDFMovieConfigurationLink
             title="構成表ダウンロード"
             PDFValue={data}
+            mutate={mutation.mutate}
           />
         </Box>
       </Box>

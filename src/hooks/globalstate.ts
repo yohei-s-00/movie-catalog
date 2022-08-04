@@ -5,7 +5,12 @@ import { searchItemsAtom } from "@states/Search/searchAtom";
 import { FirestoreError } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-import { SetterOrUpdater, useRecoilState, useRecoilValue } from "recoil";
+import {
+  SetterOrUpdater,
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+} from "recoil";
 import { useMovieQuery } from "./firestore";
 
 export const useIsLogin = (): [boolean, SetterOrUpdater<boolean>] => {
@@ -43,4 +48,8 @@ export const useFilterMovieItem = () => {
 export const useSearchQuery = (): [Attribute, SetterOrUpdater<Attribute>] => {
   const [searchItem, setSearchItem] = useRecoilState(searchItemsAtom);
   return [searchItem, setSearchItem];
+};
+export const useSearchQueryReset = () => {
+  const resetSearch = useResetRecoilState(searchItemsAtom);
+  return resetSearch;
 };

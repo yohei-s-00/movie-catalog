@@ -17,6 +17,9 @@ type MovieItem = Movie & {
   id: string;
 };
 
+type UpdateMovie = Partial<Movie>
+
+
 type Configuration = {
   scene: number;
   time: number;

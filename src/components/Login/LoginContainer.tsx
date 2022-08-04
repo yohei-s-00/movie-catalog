@@ -49,7 +49,7 @@ export const LoginContainer = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage);
+        alert("ログインできませんでした");
       });
   };
   return (

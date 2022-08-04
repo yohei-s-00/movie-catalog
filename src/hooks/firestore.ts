@@ -1,9 +1,10 @@
 import {
   useFirestoreCollectionMutation,
+  useFirestoreDocumentDeletion,
+  useFirestoreDocumentMutation,
   useFirestoreQuery,
 } from "@react-query-firebase/firestore";
-import { collection, query, where } from "firebase/firestore";
-import { useMemo, useCallback } from "react";
+import { collection, doc, query, where } from "firebase/firestore";
 import { firestore } from "src/firebase/firebase";
 import { converter } from "../firebase/firestore";
 
@@ -28,6 +29,25 @@ export const useAttibuteQuery = () => {
 export const useMovieMutation = () => {
   const ref = collection(firestore, "movies").withConverter(converter<Movie>());
   const mutation = useFirestoreCollectionMutation(ref);
-  // const { mutation, isLoading, error } = mutation;
+  return mutation;
+};
+
+export const useUpdateMovieMutation = (id: string) => {
+  const collections = collection(firestore, "movies").withConverter(
+    converter<UpdateMovie>()
+  );
+  const ref = doc(collections, id);
+  const mutation = useFirestoreDocumentMutation(ref, {
+    merge: true,
+  });
+  return mutation;
+};
+
+export const useDeleteMovieMutation = (id: string) => {
+  const collections = collection(firestore, "movies").withConverter(
+    converter<Movie>()
+  );
+  const ref = doc(collections, id);
+  const mutation = useFirestoreDocumentDeletion(ref);
   return mutation;
 };

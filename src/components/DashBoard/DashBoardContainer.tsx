@@ -11,6 +11,7 @@ export const DashBoardContainer = () => {
         {/* <PageTitle title="ダッシュボード" /> */}
       </Box>
       <DashBoardPaper title="動画コンテンツ登録" text="動画コンテンツ登録ができます" to="/admin/AddContent" />
+      {/* <DashBoardPaper title="動画コンテンツ更新・削除" text="動画コンテンツの更新、削除ができます" to="/admin/editContent" /> */}
     </Box>
   );
 };
