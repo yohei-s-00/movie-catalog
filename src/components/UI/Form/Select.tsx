@@ -17,7 +17,7 @@ export const Select: FC<Props> = ({ label, items, value, onChange }) => {
     <FormControl variant="standard" fullWidth>
       {label && <FormLabel>{label}</FormLabel>}
       <MUISelect fullWidth label={label} onChange={onChange} value={value}>
-        <MenuItem value="" disabled>
+        <MenuItem value="">
           <em>選択してください</em>
         </MenuItem>
         {items.map((item) => (

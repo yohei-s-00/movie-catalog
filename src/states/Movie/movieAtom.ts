@@ -14,7 +14,7 @@ export const movieItemAtom = atom<MovieItem[]>({
           detail: "",
           textAreas: [
             {
-              name: "",
+              text: "",
               count: 0,
             },
           ],

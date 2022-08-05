@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box } from "@mui/system";
 import { MovieDetailModal } from "@components/Modal/MovieDetailModal";
 import { FC, useState } from "react";
@@ -58,7 +59,9 @@ export const MovieCard: FC<Props> = ({ data }) => {
               <AccessTimeIcon fontSize="small" />
               <Typography variant="body1">{data.scale}</Typography>
               <ViewSidebarIcon fontSize="small" />
-              <Typography variant="body1">{data.remarks}</Typography>
+              <Typography variant="body1">{data.materials}</Typography>
+              <UploadFileIcon fontSize="small" />
+              <Typography variant="body1">{data.dlNumber}</Typography>
             </Box>
           </CardContent>
         </CardActionArea>

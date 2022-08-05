@@ -26,7 +26,7 @@ type Configuration = {
   preview: string;
   detail: string;
   textAreas: {
-    name: string;
+    text: string;
     count: number;
   }[];
 };

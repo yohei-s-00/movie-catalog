@@ -34,7 +34,7 @@ export const ArrayTextAreaFields: FC<Props> = ({
   };
   const handelAppend = () => {
     append({
-      name: "",
+      text: "",
       count: 0,
     });
   };
@@ -45,8 +45,8 @@ export const ArrayTextAreaFields: FC<Props> = ({
           <Grid item xs={9}>
             <InputField
               control={control}
-              label="タイトル"
-              name={`configuration.${nestIndex}.textAreas.${k}.name` as const}
+              label="テキスト"
+              name={`configuration.${nestIndex}.textAreas.${k}.text` as const}
             />
           </Grid>
           <Grid item xs={2}>

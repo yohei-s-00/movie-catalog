@@ -6,7 +6,7 @@ import { AddMovieConfilmForm } from "./AddMovieConfilmForm";
 import { AddMovieDetailForm } from "./AddMovieDetailForm";
 import { useAttibuteQuery, useMovieMutation } from "@hooks/firestore";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { schema } from "src/validations/movieInput";
+import { movieSchema } from "src/validations/movieInput";
 import UndoIcon from "@mui/icons-material/Undo";
 import RedoIcon from "@mui/icons-material/Redo";
 import { useAddImageStorage } from "@hooks/firestorage";
@@ -20,7 +20,7 @@ export type FormConfiguration = {
   preview: File | null | string;
   detail: string;
   textAreas: {
-    name: string;
+    text: string;
     count: number;
   }[];
 };
@@ -52,7 +52,7 @@ const formDefaultValue: FormValue = {
       detail: "",
       textAreas: [
         {
-          name: "",
+          text: "",
           count: 0,
         },
       ],
@@ -76,11 +76,15 @@ export const AddMovieFormContent = () => {
     formState: { isValid },
   } = useForm({
     mode: "onSubmit",
-    // resolver: zodResolver(schema),
+    resolver: zodResolver(movieSchema),
     defaultValues: formDefaultValue,
   });
 
   const onSubmit: SubmitHandler<FormValue> = (data) => {
+    const detailItems = data.configuration.map((item) => {
+      return item.detail
+    })
+    const detailNumber = detailItems.length
     const getFilePaths = () => {
       async function getFilePath() {
         const addThumbnailFile = await storageMutate.mutateAsync(
@@ -120,7 +124,7 @@ export const AddMovieFormContent = () => {
         movie: filePaths.movie,
         configuration: addConfiguration,
         dlNumber: 0,
-        materials: 0,
+        materials: detailNumber,
         remarks: "",
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),

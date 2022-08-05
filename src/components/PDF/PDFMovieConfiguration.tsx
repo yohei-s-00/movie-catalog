@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 65,
     paddingHorizontal: 20,
-    backgroundColor: "#E4E4E4",
+    // backgroundColor: "#E4E4E4",
     fontFamily: "Nasu-Regular",
   },
   table: {
@@ -91,17 +91,28 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
   },
   grayBox: {
-    padding: 1,
+    paddingTop: 2,
+    paddingLeft: 4,
+    paddingRight: 4,
     marginLeft: 2,
-    backgroundColor: "gray",
+    backgroundColor: "#999999",
     fontSize: 8,
+  },
+  textBox: {
+    fontFamily: "Nasu-Regular",
+    border: "1px solid black",
+    color: "#CCCCCC",
+    paddingTop: 2,
+    paddingLeft: 10,
+    width: "100%",
+    textAlign: "left",
   },
   countText: {
     fontSize: 8,
     fontWeight: 500,
     fontFamily: "Nasu-Bold",
     border: "1px solid black",
-    padding: 1,
+    paddingTop: 4,
     width: 15,
     textAlign: "center",
   },
@@ -114,6 +125,7 @@ type Props = {
     platform: string[];
     raito: string;
     scale: string;
+    materials: number;
     thumbnail: File | null | string;
     movie: File | null | string;
     configuration: FormConfiguration[];
@@ -127,10 +139,22 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
     platform,
     raito,
     scale,
-    thumbnail,
     configuration,
+    materials,
   } = formValue;
   const sceneNumber = configuration.length;
+  function getMaterial() {
+    if (materials === 0) {
+      const detailItems = configuration.map((item) => {
+        return item.detail;
+      });
+      const detailNumber = detailItems.length;
+      return detailNumber;
+    } else {
+      return materials;
+    }
+  }
+  const materialNumber = getMaterial();
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -169,7 +193,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                 <Text style={styles.tableCellBodyText}>{sceneNumber}</Text>
               </View>
               <View style={styles.tableCell}>
-                <Text style={styles.tableCellBodyText}>素材数</Text>
+                <Text style={styles.tableCellBodyText}>{materialNumber}</Text>
               </View>
               <View style={styles.tableCell}>
                 <Text style={styles.tableCellBodyText}>{raito}</Text>
@@ -239,21 +263,22 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                     ))}
                 </View>
                 <View style={styles.tableCell}>
-                  <Text style={styles.grayBox}>画像・動画</Text>
-                  <View style={{ marginTop: 5, marginBottom: 5 }}>
-                    <Text style={styles.tableCellBodyText}>
-                      [推奨素材サイズ]1920×1080
-                    </Text>
-                    <Text style={styles.tableCellBodyText}>
-                      こちらに{item.scene}シーン目の素材が入ります
-                    </Text>
-                  </View>
+                  {item.detail && (
+                    <>
+                      <Text style={styles.grayBox}>画像・動画</Text>
+                      <View style={{ marginTop: 5, marginBottom: 5 }}>
+                        <Text style={styles.tableCellBodyText}>
+                          [推奨素材サイズ]{item.detail}
+                        </Text>
+                        <Text style={styles.tableCellBodyText}>
+                          こちらに{item.scene}シーン目の素材が入ります
+                        </Text>
+                      </View>
+                    </>
+                  )}
                   <Text style={styles.grayBox}>テキスト</Text>
                   {item.textAreas.map((textArea, i) => (
                     <View key={i}>
-                      <Text style={styles.tableCellBodyText}>
-                        {textArea.name}
-                      </Text>
                       <View
                         style={{
                           flexDirection: "row",
@@ -261,13 +286,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                           marginBottom: 5,
                         }}
                       >
-                        <View
-                          style={{
-                            border: "1px solid black",
-                            backgroundColor: "white",
-                            width: "100%",
-                          }}
-                        />
+                        <Text style={styles.textBox}>{textArea.text}</Text>
                         <Text style={styles.countText}>{textArea.count}</Text>
                       </View>
                     </View>

@@ -5,6 +5,7 @@ import { Admin } from "@components/Page/Admin";
 import { Home } from "@components/Page/Home";
 import { AddContent } from "@components/Page/AddContent";
 import { Login } from "@components/Page/Login";
+import { EditContent } from "@components/Page/EditContent";
 
 export const RouterConfig: FC = () => {
   return (
@@ -17,7 +18,7 @@ export const RouterConfig: FC = () => {
             <Route path="admin">
               <Route index　element={<Admin />} />
               <Route path="addContent" element={<AddContent />}/>
-              <Route path="editContent" element={<AddContent />}/>
+              <Route path="editContent" element={<EditContent />}/>
             </Route>
           </Route>
         </Routes>

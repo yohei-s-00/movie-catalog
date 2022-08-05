@@ -14,6 +14,7 @@ type Props = {
     platform: string[];
     raito: string;
     scale: string;
+    materials: number;
     thumbnail: File | null | string;
     movie: File | null | string;
     configuration: FormConfiguration[];

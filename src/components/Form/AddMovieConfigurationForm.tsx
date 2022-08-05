@@ -24,6 +24,7 @@ import { FormValue } from "./AddMovieFormContent";
 import { AddMovieFormWrapper } from "./AddMovieFormWrapper";
 import { ArrayTextAreaFields } from "./ArrayTextAreaFields";
 import { UploadInputField } from "@components/UI/Form/UploadInputField";
+import { SelectField } from "@components/UI/Form/SelectField";
 
 type Props = {
   watch: UseFormWatch<FormValue>;
@@ -36,10 +37,12 @@ type Configuration = {
   preview: File | null;
   detail: string;
   textAreas: {
-    name: string;
+    text: string;
     count: number;
   }[];
 };
+
+const IMAGE_SIZE = ["1920×1080","1080×1920","1000×1000"];
 
 export const AddMovieConfigurationForm: FC<Props> = ({
   watch,
@@ -73,7 +76,7 @@ export const AddMovieConfigurationForm: FC<Props> = ({
       detail: "",
       textAreas: [
         {
-          name: "",
+          text: "",
           count: 0,
         },
       ],
@@ -125,9 +128,10 @@ export const AddMovieConfigurationForm: FC<Props> = ({
                 </TableCell>
                 <TableCell>
                   <Box sx={{ pb: 5 }}>
-                    <InputField
+                    <SelectField
                       control={control}
-                      label="画像・動画"
+                      label="推奨素材サイズ"
+                      items={IMAGE_SIZE}
                       name={`configuration.${index}.detail` as const}
                     />
                   </Box>

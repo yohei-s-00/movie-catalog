@@ -17,6 +17,7 @@ import { FC } from "react";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { AppModal } from "./AppModal";
 import { CenterFlexBox } from "../UI/Box/CenterFlexBox";
 import { useStoragePath } from "@hooks/firestorage";
@@ -44,7 +45,7 @@ export const MovieDetailModal: FC<Props> = ({
   const mutation = useUpdateMovieMutation(data.id)
 
   return (
-    <AppModal open={open} close={handleClose} width={900}>ß
+    <AppModal open={open} close={handleClose} width={900}>
       <Box sx={{ display: "flex", columnGap: 4 }}>
         <Box width={500} height={350}>
           {loading ? (
@@ -98,12 +99,16 @@ export const MovieDetailModal: FC<Props> = ({
               <TableBody>
                 <TableRow>
                   <TableCell align="center">{data.scale}</TableCell>
-                  <TableCell align="center">{data.remarks}</TableCell>
+                  <TableCell align="center">{data.materials}</TableCell>
                   <TableCell align="center">{data.raito}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
+          {/* <Box sx={{display: "flex"}}>
+            <UploadFileIcon fontSize="small" />
+            <Typography variant="body1">DL数:{data.dlNumber}</Typography>
+          </Box> */}
           <Typography sx={{ marginTop: 2, marginBottom: 2 }} variant="body1">
             推奨配信先
           </Typography>
@@ -124,6 +129,7 @@ export const MovieDetailModal: FC<Props> = ({
       </Box>
       <Box sx={{ height: 100, marginTop: 2 }}>
         <Typography variant="h6">特記事項</Typography>
+        <Typography>{data.remarks}</Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button variant="outlined" onClick={() => handleClose()}>
