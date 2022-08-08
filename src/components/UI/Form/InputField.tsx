@@ -15,7 +15,8 @@ export const InputField = <T extends FieldValues>(props: RhfInputProps<T>) => {
   const {
     field: { ref, ...rest },
     formState: { errors },
-  } = useController({ name, control });
+  } = useController<T>({ name, control });
+  
   return (
     <Input
       label={label}

@@ -1,4 +1,3 @@
-import { FormConfiguration } from "@components/Form/AddMovieFormContent";
 import { Box, Button } from "@mui/material";
 import { usePDF } from "@react-pdf/renderer";
 import { FirestoreError, increment, WithFieldValue } from "firebase/firestore";

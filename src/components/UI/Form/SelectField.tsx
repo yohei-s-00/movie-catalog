@@ -17,7 +17,7 @@ export const SelectField = <T extends FieldValues>(
   const {
     field: { ref, ...rest },
     formState: { errors },
-  } = useController({ name, control });
+  } = useController<T>({ name, control });
   return (
     <Select
       label={label}

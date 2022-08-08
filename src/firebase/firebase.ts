@@ -4,7 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import {
+  browserSessionPersistence,
+  getAuth,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
@@ -18,10 +23,7 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
-export const auth = getAuth(firebaseApp);
 export const storage = getStorage(firebaseApp);
 export const firestore = getFirestore(firebaseApp);
-// export const db = firebaseApp.firestore();
-// export const auth = firebaseApp.auth();
-// export const storage = firebaseApp.storage();
-// export const provider = new firebase.auth.GoogleAuthProvider();
+
+export const auth = getAuth(firebaseApp);

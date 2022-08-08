@@ -5,6 +5,7 @@ import { UploadInputField } from "@components/UI/Form/UploadInputField";
 import styled from "@emotion/styled";
 import { FC } from "react";
 import { Control, UseFormSetValue } from "react-hook-form";
+import { RESOLUTION_SIZE } from "src/public/libs/movie";
 import { MovieSchema } from "src/validations/movieInput";
 import { AddMovieFormWrapper } from "./AddMovieFormWrapper";
 
@@ -36,6 +37,14 @@ export const AddMovieDetailForm: FC<Props> = ({ data, control }) => {
           name="scale"
           label="動画尺"
           items={data.scales}
+          control={control}
+        />
+      </FieldBox>
+      <FieldBox>
+        <SelectField
+          name="resolution"
+          label="動画解像度"
+          items={RESOLUTION_SIZE}
           control={control}
         />
       </FieldBox>

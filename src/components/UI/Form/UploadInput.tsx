@@ -1,9 +1,4 @@
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-} from "@mui/material";
+import { Button, FormControl, FormHelperText, FormLabel } from "@mui/material";
 import { FC, FocusEventHandler } from "react";
 import { Image } from "../Display/Image";
 
@@ -31,8 +26,6 @@ export const UploadInput: FC<Props> = ({
   onBlur,
   value,
 }) => {
-  console.log(value);
-  
   return (
     <FormControl>
       {label && <FormLabel>{label}</FormLabel>}
@@ -44,7 +37,9 @@ export const UploadInput: FC<Props> = ({
           multiple
           type="file"
           ref={inputRef}
-          onChange={(e) => e.target.files ? onChange(e.target.files[0]) : null}
+          onChange={(e) =>
+            e.target.files ? onChange(e.target.files[0]) : null
+          }
           onBlur={onBlur}
         />
         {value ? (

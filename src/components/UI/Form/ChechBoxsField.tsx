@@ -17,7 +17,7 @@ export const ChechBoxsField = <T extends FieldValues>(
   const {
     field: { ref, ...rest },
     formState: { errors },
-  } = useController({ name, control });
+  } = useController<T>({ name, control });
   return (
     <CheckBoxs
       label={label}

@@ -25,13 +25,12 @@ import { ArrayTextAreaFields } from "./ArrayTextAreaFields";
 import { UploadInputField } from "@components/UI/Form/UploadInputField";
 import { SelectField } from "@components/UI/Form/SelectField";
 import { MovieSchema } from "src/validations/movieInput";
+import { RESOLUTION_SIZE } from "src/public/libs/movie";
 
 type Props = {
   watch: UseFormWatch<MovieSchema>;
   control: Control<MovieSchema, any>;
 };
-
-const IMAGE_SIZE = ["1920×1080", "1080×1920", "1000×1000"];
 
 export const AddMovieConfigurationForm: FC<Props> = ({ control, watch }) => {
   const [sceneIndex, setSceneIndex] = useState(1);
@@ -115,7 +114,7 @@ export const AddMovieConfigurationForm: FC<Props> = ({ control, watch }) => {
                     <SelectField
                       control={control}
                       label="推奨素材サイズ"
-                      items={IMAGE_SIZE}
+                      items={RESOLUTION_SIZE}
                       name={`configuration.${index}.detail` as const}
                     />
                   </Box>

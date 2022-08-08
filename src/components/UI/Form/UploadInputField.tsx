@@ -18,7 +18,7 @@ export const UploadInputField = <T extends FieldValues>(
   const {
     field: { ref, ...rest },
     formState: { errors },
-  } = useController({ name, control });
+  } = useController<T>({ name, control });
   return (
     <UploadInput
       label={label}

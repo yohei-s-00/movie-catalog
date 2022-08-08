@@ -4,7 +4,11 @@ import styled from "@emotion/styled";
 import { useIsLogin } from "@hooks/globalstate";
 import { useLink } from "@hooks/page";
 import { Button } from "@mui/material";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  browserSessionPersistence,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { auth } from "src/firebase/firebase";
 
@@ -39,16 +43,24 @@ export const LoginContainer = () => {
     defaultValues: initValue,
   });
   const onSubmit: SubmitHandler<LoginUser> = (data) => {
-    signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setIsLogin(true);
-        navigation("/");
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        signInWithEmailAndPassword(auth, data.email, data.password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            setIsLogin(true);
+            navigation("/");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert("ログインできませんでした");
+          });
       })
       .catch((error) => {
+        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert("ログインできませんでした");
       });
   };
   return (
@@ -66,7 +78,12 @@ export const LoginContainer = () => {
           <InputField name="email" label="メールアドレス" control={control} />
         </FieldBox>
         <FieldBox>
-          <InputField name="password" type="password" label="パスワード" control={control} />
+          <InputField
+            name="password"
+            type="password"
+            label="パスワード"
+            control={control}
+          />
         </FieldBox>
         <FieldBox>
           <Button type="submit">ログイン</Button>

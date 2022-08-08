@@ -21,35 +21,13 @@ import { serverTimestamp } from "firebase/firestore";
 import { PaperContainer } from "@components/UI/Box/PaperContainer";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export type FormConfiguration = {
-  scene: number;
-  time: number;
-  preview: File | null | string;
-  detail?: string;
-  textAreas: {
-    text?: string;
-    count?: number;
-  }[];
-};
-
-export type FormValue = {
-  title: string;
-  category: string[];
-  platform: string[];
-  raito: string;
-  scale: string;
-  materials: number;
-  thumbnail: File | null | string;
-  movie: File | null | string;
-  configuration: FormConfiguration[];
-};
-
 const formDefaultValue: MovieSchema = {
   title: "",
   category: [""],
   platform: [""],
   raito: "",
   scale: "",
+  resolution: "",
   materials: 0,
   remarks: "",
   thumbnail: null,
@@ -84,10 +62,11 @@ export const AddMovieFormContent = () => {
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
-    resolver: zodResolver(movieSchema),
+    // resolver: zodResolver(movieSchema),
     defaultValues: formDefaultValue,
   });
-  console.log(errors);
+  // console.log(IsError());
+  
 
   const onSubmit: SubmitHandler<MovieSchema> = (data) => {
     const detailItems = data.configuration.map((item) => {
@@ -130,6 +109,7 @@ export const AddMovieFormContent = () => {
           platform: data.platform.filter((item) => item !== ""),
           raito: data.raito,
           scale: data.scale,
+          resolution: data.resolution,
           thumbnail: filePaths.thumbnail,
           movie: filePaths.movie,
           configuration: addConfiguration,
@@ -140,7 +120,7 @@ export const AddMovieFormContent = () => {
           updatedAt: serverTimestamp(),
         });
       } catch (e) {
-        console.error(e);
+        alert(e);
       }
     }
     mutateMovie();
@@ -149,11 +129,10 @@ export const AddMovieFormContent = () => {
     <form
       onSubmit={handleSubmit((data) => {
         console.log(data);
-
         try {
           onSubmit(data);
         } catch (e) {
-          console.error(e);
+          alert(e);
         }
       })}
     >

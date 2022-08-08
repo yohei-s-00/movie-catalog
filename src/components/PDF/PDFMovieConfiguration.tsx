@@ -1,4 +1,3 @@
-import { FormConfiguration } from "@components/Form/AddMovieFormContent";
 import {
   Page,
   Text,
@@ -23,7 +22,7 @@ Font.register({
   src: NasuBold,
 });
 const BORDER_STYLE = "solid";
-const BORDER_COLOR = "#000";
+const BORDER_COLOR = "#999999";
 const styles = StyleSheet.create({
   page: {
     // flexDirection: "row",
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
   },
   tableCellHeader: {
-    backgroundColor: "green",
+    backgroundColor: "#40A33F",
   },
   tableCellHeaderText: {
     fontSize: 8,
@@ -114,8 +113,9 @@ const styles = StyleSheet.create({
     fontFamily: "Nasu-Bold",
     border: "1px solid black",
     paddingTop: 4,
-    width: 15,
+    width: 20,
     textAlign: "center",
+    backgroundColor: "#999999",
   },
 });
 
@@ -132,6 +132,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
     scale,
     configuration,
     materials,
+    resolution,
   } = formValue;
   const sceneNumber = configuration.length;
   function getMaterial() {
@@ -190,7 +191,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                 <Text style={styles.tableCellBodyText}>{raito}</Text>
               </View>
               <View style={styles.tableCell}>
-                <Text style={styles.tableCellBodyText}>解像度</Text>
+                <Text style={styles.tableCellBodyText}>{resolution}</Text>
               </View>
             </View>
           </View>
@@ -267,7 +268,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                       </View>
                     </>
                   )}
-                  {item.textAreas[0].text && (
+                  {item.textAreas && (
                     <>
                       <Text style={styles.grayBox}>テキスト</Text>
                       {item.textAreas.map((textArea, i) => (

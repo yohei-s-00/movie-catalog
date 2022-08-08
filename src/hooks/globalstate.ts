@@ -2,6 +2,7 @@ import { LoginAtom } from "@states/Auth/LoginAtom";
 import { movieItemAtom } from "@states/Movie/movieAtom";
 import { filterMovieState } from "@states/Movie/movieSelector";
 import { searchItemsAtom } from "@states/Search/searchAtom";
+import { onAuthStateChanged } from "firebase/auth";
 import { FirestoreError } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -11,10 +12,20 @@ import {
   useRecoilValue,
   useResetRecoilState,
 } from "recoil";
+import { auth } from "src/firebase/firebase";
 import { useMovieQuery } from "./firestore";
 
 export const useIsLogin = (): [boolean, SetterOrUpdater<boolean>] => {
   const [isLogin, setIsLogin] = useRecoilState<boolean>(LoginAtom);
+  useEffect(() => {
+    onAuthStateChanged(auth,(user) => {
+      if(user){
+        setIsLogin(true)
+      }else{
+        setIsLogin(false)
+      }
+    })
+  },[])
   return [isLogin, setIsLogin];
 };
 

@@ -10,6 +10,7 @@ type Movie = {
   materials: number;
   remarks: string;
   scale: string;
+  resolution: string;
   thumbnail: string;
   title: string;
 };
