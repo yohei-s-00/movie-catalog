@@ -3,6 +3,7 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  FormHelperText,
   FormLabel,
 } from "@mui/material";
 import { ChangeEvent, FC, useState } from "react";
@@ -10,6 +11,7 @@ import { ChangeEvent, FC, useState } from "react";
 export type CheckBoxProps = {
   items: string[];
   label?: string;
+  error?: string;
 };
 
 type Props = CheckBoxProps & {
@@ -17,20 +19,24 @@ type Props = CheckBoxProps & {
   onChange: (...event: any[]) => void;
 };
 
-export const CheckBoxs: FC<Props> = ({ items, label, onChange, value }) => {
+export const CheckBoxs: FC<Props> = ({
+  items,
+  label,
+  error,
+  onChange,
+  value,
+}) => {
   const [values, setValues] = useState<(string | null)[]>(value || []);
   const handleChenge = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     const valueCopy = [...values];
     valueCopy[index] = e.target.checked ? e.target.value : null;
     const filterValue = valueCopy.map((val) => {
-      if(val === undefined){
-        return null
+      if(val){
+        return val
+      }else{
+        return '';
       }
-      if(val === ''){
-        return null
-      }
-      return val;
-    });
+    })
     onChange(filterValue);
     setValues(filterValue);
   };
@@ -52,6 +58,7 @@ export const CheckBoxs: FC<Props> = ({ items, label, onChange, value }) => {
           />
         ))}
       </FormGroup>
+      {error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>
   );
 };

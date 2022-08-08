@@ -5,20 +5,19 @@ import { UploadInputField } from "@components/UI/Form/UploadInputField";
 import styled from "@emotion/styled";
 import { FC } from "react";
 import { Control, UseFormSetValue } from "react-hook-form";
-import { FormValue } from "./AddMovieFormContent";
+import { MovieSchema } from "src/validations/movieInput";
 import { AddMovieFormWrapper } from "./AddMovieFormWrapper";
 
 type Props = {
   data: Attribute;
-  control: Control<FormValue, any>;
-  setValue: UseFormSetValue<FormValue>;
+  control: Control<MovieSchema, any>;
 };
 
 const FieldBox = styled.div({
   marginTop: 40,
 });
 
-export const AddMovieDetailForm: FC<Props> = ({ data, control, setValue }) => {
+export const AddMovieDetailForm: FC<Props> = ({ data, control }) => {
   return (
     <AddMovieFormWrapper title="動画詳細登録">
       <FieldBox>
@@ -62,7 +61,6 @@ export const AddMovieDetailForm: FC<Props> = ({ data, control, setValue }) => {
           label="サムネイル"
           accept="image"
           control={control}
-          setValue={setValue}
         />
       </FieldBox>
       <FieldBox>
@@ -71,8 +69,10 @@ export const AddMovieDetailForm: FC<Props> = ({ data, control, setValue }) => {
           label="動画"
           accept="video"
           control={control}
-          setValue={setValue}
         />
+      </FieldBox>
+      <FieldBox>
+        <InputField name="remarks" label="特記事項" control={control} />
       </FieldBox>
     </AddMovieFormWrapper>
   );

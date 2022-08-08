@@ -20,42 +20,25 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-import { FormValue } from "./AddMovieFormContent";
 import { AddMovieFormWrapper } from "./AddMovieFormWrapper";
 import { ArrayTextAreaFields } from "./ArrayTextAreaFields";
 import { UploadInputField } from "@components/UI/Form/UploadInputField";
 import { SelectField } from "@components/UI/Form/SelectField";
+import { MovieSchema } from "src/validations/movieInput";
 
 type Props = {
-  watch: UseFormWatch<FormValue>;
-  control: Control<FormValue, any>;
-  setValue: UseFormSetValue<FormValue>;
-};
-type Configuration = {
-  scene: number;
-  time: string;
-  preview: File | null;
-  detail: string;
-  textAreas: {
-    text: string;
-    count: number;
-  }[];
+  watch: UseFormWatch<MovieSchema>;
+  control: Control<MovieSchema, any>;
 };
 
-const IMAGE_SIZE = ["1920×1080","1080×1920","1000×1000"];
+const IMAGE_SIZE = ["1920×1080", "1080×1920", "1000×1000"];
 
-export const AddMovieConfigurationForm: FC<Props> = ({
-  watch,
-  control,
-  setValue,
-}) => {
+export const AddMovieConfigurationForm: FC<Props> = ({ control, watch }) => {
   const [sceneIndex, setSceneIndex] = useState(1);
-  const { fields, append, remove, } = useFieldArray(
-    {
-      control,
-      name: "configuration",
-    }
-  );
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "configuration",
+  });
   const watchFieldArray = watch("configuration");
   const controlledFields = fields.map((field, index) => {
     return {
@@ -109,12 +92,14 @@ export const AddMovieConfigurationForm: FC<Props> = ({
                 <TableCell align="center">
                   <InputField
                     control={control}
+                    type="number"
                     name={`configuration.${index}.scene` as const}
                   />
                 </TableCell>
                 <TableCell align="center">
                   <InputField
                     control={control}
+                    type="number"
                     name={`configuration.${index}.time` as const}
                   />
                 </TableCell>
@@ -123,7 +108,6 @@ export const AddMovieConfigurationForm: FC<Props> = ({
                     name={`configuration.${index}.preview` as const}
                     accept="image"
                     control={control}
-                    setValue={setValue}
                   />
                 </TableCell>
                 <TableCell>
@@ -156,7 +140,7 @@ export const AddMovieConfigurationForm: FC<Props> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <Button sx={{mt: 2}} variant="outlined" onClick={() => handelAppend()}>
+      <Button sx={{ mt: 2 }} variant="outlined" onClick={() => handelAppend()}>
         <AddBoxIcon />
         行を追加
       </Button>

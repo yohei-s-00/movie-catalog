@@ -1,4 +1,6 @@
 import {
+  DeepMap,
+  FieldError,
   FieldValues,
   useController,
   UseControllerProps,
@@ -16,5 +18,15 @@ export const SelectField = <T extends FieldValues>(
     field: { ref, ...rest },
     formState: { errors },
   } = useController({ name, control });
-  return <Select label={label} items={items} {...rest} />;
+  return (
+    <Select
+      label={label}
+      items={items}
+      {...rest}
+      error={
+        errors[name] &&
+        `${(errors[name] as DeepMap<FieldValues, FieldError>).message}`
+      }
+    />
+  );
 };

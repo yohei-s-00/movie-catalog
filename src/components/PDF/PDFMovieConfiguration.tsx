@@ -12,6 +12,7 @@ import { FC } from "react";
 import NasuRegular from "../../public/font/Nasu-Regular.ttf";
 import NasuBold from "../../public/font/Nasu-Bold.ttf";
 import { PDFImage } from "./PDFImage";
+import { MovieSchema } from "src/validations/movieInput";
 
 Font.register({
   family: "Nasu-Regular",
@@ -119,17 +120,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  formValue: {
-    title: string;
-    category: string[];
-    platform: string[];
-    raito: string;
-    scale: string;
-    materials: number;
-    thumbnail: File | null | string;
-    movie: File | null | string;
-    configuration: FormConfiguration[];
-  };
+  formValue: MovieSchema | MovieItem;
 };
 
 export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
@@ -276,21 +267,27 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                       </View>
                     </>
                   )}
-                  <Text style={styles.grayBox}>テキスト</Text>
-                  {item.textAreas.map((textArea, i) => (
-                    <View key={i}>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          marginTop: 5,
-                          marginBottom: 5,
-                        }}
-                      >
-                        <Text style={styles.textBox}>{textArea.text}</Text>
-                        <Text style={styles.countText}>{textArea.count}</Text>
-                      </View>
-                    </View>
-                  ))}
+                  {item.textAreas[0].text && (
+                    <>
+                      <Text style={styles.grayBox}>テキスト</Text>
+                      {item.textAreas.map((textArea, i) => (
+                        <View key={i}>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              marginTop: 5,
+                              marginBottom: 5,
+                            }}
+                          >
+                            <Text style={styles.textBox}>{textArea.text}</Text>
+                            <Text style={styles.countText}>
+                              {textArea.count}
+                            </Text>
+                          </View>
+                        </View>
+                      ))}
+                    </>
+                  )}
                 </View>
               </View>
             ))}

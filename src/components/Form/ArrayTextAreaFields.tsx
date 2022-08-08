@@ -3,13 +3,13 @@ import { Grid, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { FC } from "react";
 import { Control, useFieldArray, UseFormWatch } from "react-hook-form";
-import { FormValue } from "./AddMovieFormContent";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { MovieSchema } from "src/validations/movieInput";
 
 type Props = {
-  control: Control<FormValue, any>;
-  watch: UseFormWatch<FormValue>;
+  control: Control<MovieSchema, any>;
+  watch: UseFormWatch<MovieSchema>;
   nestIndex: number;
 };
 
@@ -53,6 +53,7 @@ export const ArrayTextAreaFields: FC<Props> = ({
             <InputField
               control={control}
               label="文字数"
+              type="number"
               name={`configuration.${nestIndex}.textAreas.${k}.count` as const}
             />
           </Grid>

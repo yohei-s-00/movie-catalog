@@ -1,26 +1,28 @@
 import { z } from "zod";
 
 export const movieSchema = z.object({
-  title: z.string().nonempty({ message: '入力してください' }),
-  category: z.string().array().nonempty({ message: '選択してください' }),
-  platform: z.string().array().nonempty({ message: '選択してください' }),
-  scale: z.string().nonempty({ message: '選択してください' }),
-  thumbnail: z.any(),
-  movie: z.any(),
-  dlNumber: z.number(),
+  title: z.string(),
+  category: z.array(z.string()),
+  platform: z.array(z.string()),
+  scale: z.string(),
+  raito: z.string(),
+  thumbnail: typeof window === 'undefined' ? z.any() : z.union([z.instanceof(File),z.string().nullable()]),
+  movie: typeof window === 'undefined' ? z.any() : z.union([z.instanceof(File),z.string().nullable()]),
+  // dlNumber: z.number(),
   remarks: z.string(),
   materials: z.number(),
   configuration: z.array(z.object({
     detail: z.string(),
-    preview: z.any(),
+    preview: typeof window === 'undefined' ? z.any() : z.union([z.instanceof(File),z.string().nullable()]),
     scene: z.number(),
+    time: z.number(),
     textAreas: z.array(z.object({
       count: z.number(),
       text: z.string()
     }))
   })),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  // createdAt: z.date(),
+  // updatedAt: z.date(),
 });
 
-export type Schema = z.infer<typeof movieSchema>;
+export type MovieSchema = z.infer<typeof movieSchema>;

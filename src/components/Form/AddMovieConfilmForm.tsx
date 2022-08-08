@@ -11,15 +11,14 @@ import {
 import { FC } from "react";
 import { UseFormGetValues, UseFormHandleSubmit } from "react-hook-form";
 import { AddMovieFormWrapper } from "./AddMovieFormWrapper";
-import { FormValue } from "./AddMovieFormContent";
 import { PDFMovieConfigurationLink } from "@components/PDF/PDFMovieConfigurationLink";
+import { MovieSchema } from "src/validations/movieInput";
 
 type Props = {
-  handleSubmit: UseFormHandleSubmit<FormValue>;
-  getValues: UseFormGetValues<FormValue>;
+  getValues: UseFormGetValues<MovieSchema>;
 };
 
-export const AddMovieConfilmForm: FC<Props> = ({ handleSubmit, getValues }) => {
+export const AddMovieConfilmForm: FC<Props> = ({ getValues }) => {
   const formValue = getValues();
   return (
     <AddMovieFormWrapper title="登録確認">

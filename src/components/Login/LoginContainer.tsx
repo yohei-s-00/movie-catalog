@@ -42,7 +42,6 @@ export const LoginContainer = () => {
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
         setIsLogin(true);
         navigation("/");
       })

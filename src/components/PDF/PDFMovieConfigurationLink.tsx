@@ -4,21 +4,12 @@ import { usePDF } from "@react-pdf/renderer";
 import { FirestoreError, increment, WithFieldValue } from "firebase/firestore";
 import { FC } from "react";
 import { UseMutateFunction } from "react-query";
+import { MovieSchema } from "src/validations/movieInput";
 import { PDFMovieConfiguration } from "./PDFMovieConfiguration";
 
 type Props = {
   title: string;
-  PDFValue: {
-    title: string;
-    category: string[];
-    platform: string[];
-    raito: string;
-    scale: string;
-    materials: number;
-    thumbnail: File | null | string;
-    movie: File | null | string;
-    configuration: FormConfiguration[];
-  };
+  PDFValue: MovieSchema | MovieItem;
   mutate?: UseMutateFunction<
     void,
     FirestoreError,

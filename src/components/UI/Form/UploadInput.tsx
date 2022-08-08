@@ -1,12 +1,10 @@
-import { FormValue } from "@components/Form/AddMovieFormContent";
 import {
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
-  TextareaAutosizeProps,
 } from "@mui/material";
-import { ChangeEvent, ChangeEventHandler, FC, FocusEventHandler } from "react";
-import { FieldValues, Path, UseFormSetValue } from "react-hook-form";
+import { FC, FocusEventHandler } from "react";
 import { Image } from "../Display/Image";
 
 export type UploadInputProps = {
@@ -17,9 +15,8 @@ export type UploadInputProps = {
 
 type Props = UploadInputProps & {
   inputRef: React.Ref<HTMLInputElement>;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange: (...event: any[]) => void;
   onBlur: FocusEventHandler<HTMLInputElement>;
-  OnChangeFile: ChangeEventHandler<HTMLInputElement>;
   value: File | null | string;
   name: string;
 };
@@ -32,9 +29,10 @@ export const UploadInput: FC<Props> = ({
   inputRef,
   onChange,
   onBlur,
-  OnChangeFile,
   value,
 }) => {
+  console.log(value);
+  
   return (
     <FormControl>
       {label && <FormLabel>{label}</FormLabel>}
@@ -46,7 +44,7 @@ export const UploadInput: FC<Props> = ({
           multiple
           type="file"
           ref={inputRef}
-          onChange={OnChangeFile}
+          onChange={(e) => e.target.files ? onChange(e.target.files[0]) : null}
           onBlur={onBlur}
         />
         {value ? (
@@ -68,6 +66,7 @@ export const UploadInput: FC<Props> = ({
           </Button>
         )}
       </label>
+      {error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>
   );
 };

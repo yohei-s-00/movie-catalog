@@ -1,10 +1,11 @@
-import { FormControl, FormLabel, MenuItem } from "@mui/material";
+import { FormControl, FormHelperText, FormLabel, MenuItem } from "@mui/material";
 import MUISelect from "@mui/material/Select/Select";
 import { FC } from "react";
 
 export type SlectFieldProps = {
   label?: string;
   items: string[];
+  error?: string
 };
 
 type Props = SlectFieldProps & {
@@ -12,7 +13,7 @@ type Props = SlectFieldProps & {
   onChange: (...event: any[]) => void;
 };
 
-export const Select: FC<Props> = ({ label, items, value, onChange }) => {
+export const Select: FC<Props> = ({ label, items, error, value, onChange }) => {
   return (
     <FormControl variant="standard" fullWidth>
       {label && <FormLabel>{label}</FormLabel>}
@@ -26,6 +27,7 @@ export const Select: FC<Props> = ({ label, items, value, onChange }) => {
           </MenuItem>
         ))}
       </MUISelect>
+      {error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>
   );
 };

@@ -1,12 +1,19 @@
 import { useSteps } from "@hooks/libs";
-import { Box, Button, Container, Step, StepLabel, Stepper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Step,
+  StepLabel,
+  Stepper,
+} from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AddMovieConfigurationForm } from "./AddMovieConfigurationForm";
 import { AddMovieConfilmForm } from "./AddMovieConfilmForm";
 import { AddMovieDetailForm } from "./AddMovieDetailForm";
 import { useAttibuteQuery, useMovieMutation } from "@hooks/firestore";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { movieSchema } from "src/validations/movieInput";
+import { movieSchema, MovieSchema } from "src/validations/movieInput";
 import UndoIcon from "@mui/icons-material/Undo";
 import RedoIcon from "@mui/icons-material/Redo";
 import { useAddImageStorage } from "@hooks/firestorage";
@@ -18,10 +25,10 @@ export type FormConfiguration = {
   scene: number;
   time: number;
   preview: File | null | string;
-  detail: string;
+  detail?: string;
   textAreas: {
-    text: string;
-    count: number;
+    text?: string;
+    count?: number;
   }[];
 };
 
@@ -31,17 +38,20 @@ export type FormValue = {
   platform: string[];
   raito: string;
   scale: string;
+  materials: number;
   thumbnail: File | null | string;
   movie: File | null | string;
   configuration: FormConfiguration[];
 };
 
-const formDefaultValue: FormValue = {
+const formDefaultValue: MovieSchema = {
   title: "",
-  category: [],
-  platform: [],
+  category: [""],
+  platform: [""],
   raito: "",
   scale: "",
+  materials: 0,
+  remarks: "",
   thumbnail: null,
   movie: null,
   configuration: [
@@ -69,22 +79,21 @@ export const AddMovieFormContent = () => {
   const {
     control,
     handleSubmit,
-    setError,
-    setValue,
     getValues,
     watch,
-    formState: { isValid },
+    formState: { errors },
   } = useForm({
     mode: "onSubmit",
     resolver: zodResolver(movieSchema),
     defaultValues: formDefaultValue,
   });
+  console.log(errors);
 
-  const onSubmit: SubmitHandler<FormValue> = (data) => {
+  const onSubmit: SubmitHandler<MovieSchema> = (data) => {
     const detailItems = data.configuration.map((item) => {
-      return item.detail
-    })
-    const detailNumber = detailItems.length
+      return item.detail;
+    });
+    const detailNumber = detailItems.length;
     const getFilePaths = () => {
       async function getFilePath() {
         const addThumbnailFile = await storageMutate.mutateAsync(
@@ -114,31 +123,37 @@ export const AddMovieFormContent = () => {
     );
     async function mutateMovie() {
       const filePaths = await getFilePaths();
-      mutation.mutateAsync({
-        title: data.title,
-        category: data.category.filter((item)=> item !== null),
-        platform: data.platform.filter((item)=> item !== null),
-        raito: data.raito,
-        scale: data.scale,
-        thumbnail: filePaths.thumbnail,
-        movie: filePaths.movie,
-        configuration: addConfiguration,
-        dlNumber: 0,
-        materials: detailNumber,
-        remarks: "",
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
+      try {
+        await mutation.mutateAsync({
+          title: data.title,
+          category: data.category.filter((item) => item !== ""),
+          platform: data.platform.filter((item) => item !== ""),
+          raito: data.raito,
+          scale: data.scale,
+          thumbnail: filePaths.thumbnail,
+          movie: filePaths.movie,
+          configuration: addConfiguration,
+          dlNumber: 0,
+          materials: detailNumber,
+          remarks: "",
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
     mutateMovie();
   };
   return (
     <form
       onSubmit={handleSubmit((data) => {
+        console.log(data);
+
         try {
           onSubmit(data);
         } catch (e) {
-          alert(e);
+          console.error(e);
         }
       })}
     >
@@ -159,22 +174,12 @@ export const AddMovieFormContent = () => {
                 control={control}
                 key={doc.id}
                 data={doc.data()}
-                setValue={setValue}
               />
             ))}
           {step === 1 && (
-            <AddMovieConfigurationForm
-              control={control}
-              setValue={setValue}
-              watch={watch}
-            />
+            <AddMovieConfigurationForm control={control} watch={watch} />
           )}
-          {step === 2 && (
-            <AddMovieConfilmForm
-              handleSubmit={handleSubmit}
-              getValues={getValues}
-            />
-          )}
+          {step === 2 && <AddMovieConfilmForm getValues={getValues} />}
         </Box>
         <Box textAlign={"right"}>
           {step >= 1 && (
