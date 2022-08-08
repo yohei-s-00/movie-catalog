@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     borderStyle: BORDER_STYLE,
     borderColor: BORDER_COLOR,
     borderWidth: 1,
-    borderBottomWidth: 0,
+    borderBottomWidth: 1,
     borderLeftWidth: 0,
   },
   tableCellHeader: {
@@ -100,10 +100,12 @@ const styles = StyleSheet.create({
   },
   textBox: {
     fontFamily: "Nasu-Regular",
-    border: "1px solid black",
+    border: "1px solid #999999",
     color: "#CCCCCC",
-    paddingTop: 2,
-    paddingLeft: 10,
+    paddingTop: 4,
+    fontSize: 8,
+    paddingLeft: 5,
+    paddingRight: 5,
     width: "100%",
     textAlign: "left",
   },
@@ -111,13 +113,17 @@ const styles = StyleSheet.create({
     fontSize: 8,
     fontWeight: 500,
     fontFamily: "Nasu-Bold",
-    border: "1px solid black",
+    border: "1px solid #999999",
     paddingTop: 4,
-    width: 20,
+    width: 18,
     textAlign: "center",
     backgroundColor: "#999999",
   },
 });
+
+Font.registerHyphenationCallback((word) =>
+  Array.from(word).flatMap((char) => [char, ''])
+)
 
 type Props = {
   formValue: MovieSchema | MovieItem;
@@ -268,7 +274,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                       </View>
                     </>
                   )}
-                  {item.textAreas && (
+                  {item.textAreas[0].text !== '' && (
                     <>
                       <Text style={styles.grayBox}>テキスト</Text>
                       {item.textAreas.map((textArea, i) => (
@@ -280,7 +286,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                               marginBottom: 5,
                             }}
                           >
-                            <Text style={styles.textBox}>{textArea.text}</Text>
+                            <Text wrap={false} style={styles.textBox}>{textArea.text}</Text>
                             <Text style={styles.countText}>
                               {textArea.count}
                             </Text>
