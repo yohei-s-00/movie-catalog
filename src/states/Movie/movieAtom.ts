@@ -26,6 +26,7 @@ export const movieItemAtom = atom<MovieItem[]>({
       movie: "",
       platform: [],
       raito: "",
+      resolution: "",
       remarks: "",
       scale: "",
       thumbnail: "",
