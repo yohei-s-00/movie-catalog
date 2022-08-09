@@ -12,6 +12,7 @@ export const movieItemAtom = atom<MovieItem[]>({
           time: 0,
           preview: "",
           detail: "",
+          imgVolume: 0,
           textAreas: [
             {
               text: "",

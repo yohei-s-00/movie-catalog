@@ -20,7 +20,6 @@ import { useAddImageStorage } from "@hooks/firestorage";
 import { serverTimestamp } from "firebase/firestore";
 import { PaperContainer } from "@components/UI/Box/PaperContainer";
 import CircularProgress from "@mui/material/CircularProgress";
-import { number } from "zod";
 
 const formDefaultValue: MovieSchema = {
   title: "",
