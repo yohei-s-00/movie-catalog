@@ -4,7 +4,7 @@ import {
   FormLabel,
   TextareaAutosizeProps,
 } from "@mui/material";
-import MUIInput from "@mui/material/TextField";
+import MUIInput from "@mui/material/Input";
 import { FC, FocusEventHandler } from "react";
 
 export type InputFieldProps = {
@@ -39,7 +39,7 @@ export const Input: FC<Props> = ({
         onChange={(e)=> type === "number" ? onChange(parseInt(e.target.value))  : onChange(e.target.value)}
         onBlur={onBlur}
         type={type && type}
-        variant="standard"
+        // variant="standard"
         
       />
       {error && <FormHelperText>{error}</FormHelperText>}

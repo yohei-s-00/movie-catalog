@@ -21,6 +21,7 @@ export const movieSchema = z.object({
   configuration: z
     .object({
       detail: z.string().optional(),
+      imgVolume: z.number(),
       preview:
         typeof window === "undefined"
           ? z.any()

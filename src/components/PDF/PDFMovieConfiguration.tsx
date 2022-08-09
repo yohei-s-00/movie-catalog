@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
 });
 
 Font.registerHyphenationCallback((word) =>
-  Array.from(word).flatMap((char) => [char, ''])
-)
+  Array.from(word).flatMap((char) => [char, ""])
+);
 
 type Props = {
   formValue: MovieSchema | MovieItem;
@@ -261,20 +261,46 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                     ))}
                 </View>
                 <View style={styles.tableCell}>
-                  {item.detail && (
-                    <>
-                      <Text style={styles.grayBox}>画像・動画</Text>
-                      <View style={{ marginTop: 5, marginBottom: 5 }}>
-                        <Text style={styles.tableCellBodyText}>
-                          [推奨素材サイズ]{item.detail}
-                        </Text>
-                        <Text style={styles.tableCellBodyText}>
-                          こちらに{item.scene}シーン目の素材が入ります
-                        </Text>
-                      </View>
-                    </>
-                  )}
-                  {item.textAreas[0].text !== '' && (
+                  {item.detail &&
+                    (item.detail === "ロゴ素材" ? (
+                      <>
+                        <Text style={styles.grayBox}>画像・動画</Text>
+                        <View style={{ marginTop: 5, marginBottom: 5 }}>
+                          <Text style={styles.tableCellBodyText}>
+                            こちらにロゴ素材 (透過png推奨)が入ります
+                          </Text>
+                        </View>
+                      </>
+                    ) : (
+                      <>
+                        <Text style={styles.grayBox}>画像・動画</Text>
+                        <View style={{ marginTop: 5, marginBottom: 5 }}>
+                          <Text style={styles.tableCellBodyText}>
+                            [推奨素材サイズ]{item.detail}
+                          </Text>
+                          {item.imgVolume > 1 ? (
+                            Array(item.imgVolume)
+                              .fill("")
+                              .map((v, i) => {
+                                return (
+                                  <Text
+                                    key={i}
+                                    style={styles.tableCellBodyText}
+                                  >
+                                    こちらに{item.scene}シーン目{i + 1}
+                                    枚目の素材が入ります
+                                  </Text>
+                                );
+                              })
+                          ) : (
+                            <Text style={styles.tableCellBodyText}>
+                              こちらに{item.scene}シーン目の素材が入ります
+                            </Text>
+                          )}
+                        </View>
+                      </>
+                    ))}
+                  {item.textAreas[0].text !== "" && (
                     <>
                       <Text style={styles.grayBox}>テキスト</Text>
                       {item.textAreas.map((textArea, i) => (
@@ -286,7 +312,9 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                               marginBottom: 5,
                             }}
                           >
-                            <Text wrap={false} style={styles.textBox}>{textArea.text}</Text>
+                            <Text wrap={false} style={styles.textBox}>
+                              {textArea.text}
+                            </Text>
                             <Text style={styles.countText}>
                               {textArea.count}
                             </Text>

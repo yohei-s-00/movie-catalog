@@ -2,6 +2,7 @@ import { InputField } from "@components/UI/Form/InputField";
 import {
   Box,
   Button,
+  Grid,
   IconButton,
   Paper,
   Table,
@@ -25,7 +26,7 @@ import { ArrayTextAreaFields } from "./ArrayTextAreaFields";
 import { UploadInputField } from "@components/UI/Form/UploadInputField";
 import { SelectField } from "@components/UI/Form/SelectField";
 import { MovieSchema } from "src/validations/movieInput";
-import { RESOLUTION_SIZE } from "src/public/libs/movie";
+import { RESOLUTION_IMAGE } from "src/public/libs/movie";
 
 type Props = {
   watch: UseFormWatch<MovieSchema>;
@@ -56,6 +57,7 @@ export const AddMovieConfigurationForm: FC<Props> = ({ control, watch }) => {
       time: 0,
       preview: null,
       detail: "",
+      imgVolume: 0,
       textAreas: [
         {
           text: "",
@@ -110,14 +112,24 @@ export const AddMovieConfigurationForm: FC<Props> = ({ control, watch }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  <Box sx={{ pb: 5 }}>
-                    <SelectField
-                      control={control}
-                      label="推奨素材サイズ"
-                      items={RESOLUTION_SIZE}
-                      name={`configuration.${index}.detail` as const}
-                    />
-                  </Box>
+                  <Grid sx={{ pb: 5 }} container spacing={2}>
+                    <Grid item xs={9}>
+                      <SelectField
+                        control={control}
+                        label="推奨素材サイズ"
+                        items={RESOLUTION_IMAGE}
+                        name={`configuration.${index}.detail` as const}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <InputField
+                        control={control}
+                        label="画像素材数"
+                        type="number"
+                        name={`configuration.${index}.imgVolume` as const}
+                      />
+                    </Grid>
+                  </Grid>
                   <ArrayTextAreaFields
                     control={control}
                     watch={watch}

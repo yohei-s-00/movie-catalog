@@ -26,6 +26,7 @@ type Configuration = {
   time: number;
   preview: string;
   detail: string;
+  imgVolume: number;
   textAreas: {
     text: string;
     count: number;

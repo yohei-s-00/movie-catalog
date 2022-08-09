@@ -20,6 +20,7 @@ import { useAddImageStorage } from "@hooks/firestorage";
 import { serverTimestamp } from "firebase/firestore";
 import { PaperContainer } from "@components/UI/Box/PaperContainer";
 import CircularProgress from "@mui/material/CircularProgress";
+import { number } from "zod";
 
 const formDefaultValue: MovieSchema = {
   title: "",
@@ -38,6 +39,7 @@ const formDefaultValue: MovieSchema = {
       time: 0,
       preview: null,
       detail: "",
+      imgVolume: 0,
       textAreas: [
         {
           text: "",
@@ -70,10 +72,10 @@ export const AddMovieFormContent = () => {
 
   const onSubmit: SubmitHandler<MovieSchema> = (data) => {
     const detailItems = data.configuration.map((item) => {
-      if(item.detail === "") return
-      return item.detail;
+      return item.imgVolume;
     });
-    const detailNumber = detailItems.length;
+    const reducer = (sum: number,currentValue: number) => sum + currentValue
+    const detailNumber = detailItems.reduce(reducer)
     const getFilePaths = () => {
       async function getFilePath() {
         const addThumbnailFile = await storageMutate.mutateAsync(
