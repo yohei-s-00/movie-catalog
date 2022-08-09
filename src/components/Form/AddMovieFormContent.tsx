@@ -70,6 +70,7 @@ export const AddMovieFormContent = () => {
 
   const onSubmit: SubmitHandler<MovieSchema> = (data) => {
     const detailItems = data.configuration.map((item) => {
+      if(item.detail === "") return
       return item.detail;
     });
     const detailNumber = detailItems.length;
