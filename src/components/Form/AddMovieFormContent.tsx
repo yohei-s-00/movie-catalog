@@ -21,6 +21,7 @@ import { serverTimestamp } from "firebase/firestore";
 import { PaperContainer } from "@components/UI/Box/PaperContainer";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useLink } from "@hooks/page";
+import { reducer } from "src/utility";
 
 const formDefaultValue: MovieSchema = {
   title: "",
@@ -74,7 +75,6 @@ export const AddMovieFormContent = () => {
     const detailItems = data.configuration.map((item) => {
       return item.imgVolume;
     });
-    const reducer = (sum: number, currentValue: number) => sum + currentValue;
     const detailNumber = detailItems.reduce(reducer);
     const getFilePaths = () => {
       async function getFilePath() {

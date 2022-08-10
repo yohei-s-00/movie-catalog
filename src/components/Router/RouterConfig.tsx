@@ -6,6 +6,7 @@ import { Home } from "@components/Page/Home";
 import { AddContent } from "@components/Page/AddContent";
 import { Login } from "@components/Page/Login";
 import { EditContent } from "@components/Page/EditContent";
+import { AuthRouteGuard } from "./AuthRouteGuard";
 
 export const RouterConfig: FC = () => {
   return (
@@ -13,12 +14,33 @@ export const RouterConfig: FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />}/>
+            <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="admin">
-              <Route index　element={<Admin />} />
-              <Route path="addContent" element={<AddContent />}/>
-              <Route path="editContent" element={<EditContent />}/>
+              <Route
+                index
+                element={
+                  <AuthRouteGuard redirect="/">
+                    <Admin />
+                  </AuthRouteGuard>
+                }
+              />
+              <Route
+                path="addContent"
+                element={
+                  <AuthRouteGuard redirect="/">
+                    <AddContent />
+                  </AuthRouteGuard>
+                }
+              />
+              <Route
+                path="editContent"
+                element={
+                  <AuthRouteGuard redirect="/">
+                    <EditContent />
+                  </AuthRouteGuard>
+                }
+              />
             </Route>
           </Route>
         </Routes>

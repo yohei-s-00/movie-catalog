@@ -12,6 +12,7 @@ import NasuRegular from "../../public/font/Nasu-Regular.ttf";
 import NasuBold from "../../public/font/Nasu-Bold.ttf";
 import { PDFImage } from "./PDFImage";
 import { MovieSchema } from "src/validations/movieInput";
+import { reducer } from "src/utility";
 
 Font.register({
   family: "Nasu-Regular",
@@ -140,17 +141,14 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
     materials,
     resolution,
   } = formValue;
+
   const sceneNumber = configuration.length;
   function getMaterial() {
-    if (materials === 0) {
-      const detailItems = configuration.map((item) => {
-        return item.detail;
-      });
-      const detailNumber = detailItems.length;
-      return detailNumber;
-    } else {
-      return materials;
-    }
+    const detailItems = configuration.map((item) => {
+      return item.imgVolume;
+    });
+    const detailNumber = detailItems.reduce(reducer);
+    return detailNumber;
   }
   const materialNumber = getMaterial();
   return (
