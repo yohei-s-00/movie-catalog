@@ -20,6 +20,7 @@ import { useAddImageStorage } from "@hooks/firestorage";
 import { serverTimestamp } from "firebase/firestore";
 import { PaperContainer } from "@components/UI/Box/PaperContainer";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useLink } from "@hooks/page";
 
 const formDefaultValue: MovieSchema = {
   title: "",
@@ -55,6 +56,7 @@ export const AddMovieFormContent = () => {
   const mutation = useMovieMutation();
   const storageMutate = useAddImageStorage();
   const [step, next, back] = useSteps(0);
+  const navigation = useLink();
   const {
     control,
     handleSubmit,
@@ -67,14 +69,13 @@ export const AddMovieFormContent = () => {
     defaultValues: formDefaultValue,
   });
   // console.log(IsError());
-  
 
   const onSubmit: SubmitHandler<MovieSchema> = (data) => {
     const detailItems = data.configuration.map((item) => {
       return item.imgVolume;
     });
-    const reducer = (sum: number,currentValue: number) => sum + currentValue
-    const detailNumber = detailItems.reduce(reducer)
+    const reducer = (sum: number, currentValue: number) => sum + currentValue;
+    const detailNumber = detailItems.reduce(reducer);
     const getFilePaths = () => {
       async function getFilePath() {
         const addThumbnailFile = await storageMutate.mutateAsync(
@@ -121,8 +122,9 @@ export const AddMovieFormContent = () => {
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });
+        navigation("/");
       } catch (e) {
-        alert(e);
+        alert(`${e}:送信エラーが発生しました。`);
       }
     }
     mutateMovie();
@@ -130,11 +132,10 @@ export const AddMovieFormContent = () => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        console.log(data);
         try {
           onSubmit(data);
         } catch (e) {
-          alert(e);
+          alert(`${e}:送信エラーが発生しました。`);
         }
       })}
     >
@@ -179,7 +180,7 @@ export const AddMovieFormContent = () => {
       </PaperContainer>
       <Container maxWidth="lg">
         <Button variant="contained" type="submit">
-          {mutation.isLoading ? <CircularProgress /> : "コンテンツ新規追加"}
+          {mutation.isLoading ? "loading..." : "コンテンツ新規追加"}
         </Button>
       </Container>
     </form>
