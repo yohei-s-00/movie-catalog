@@ -14,27 +14,32 @@ export const filterMovieState = selector({
   get: ({ get }) =>
     get(movieItemAtom).filter((item) => {
       const searchQuery = get(searchItemsAtom);
+      
       function searchMovie() {
         let search = true;
-        if (searchQuery.categories.length) {
+        const categories = searchQuery.categories.filter((item) => item !== "")
+        if (categories.length) {
           search = isIncludes(searchQuery.categories, item.category);
           if (search === false) {
             return false;
           }
         }
-        if (searchQuery.platforms.length) {
+        const platforms = searchQuery.platforms.filter((item) => item !== "")
+        if (platforms.length) {
           search = isIncludes(searchQuery.platforms, item.platform);
           if (search === false) {
             return false;
           }
         }
-        if (searchQuery.raitos.length) {
+        const raitos = searchQuery.raitos.filter((item) => item !== "")
+        if (raitos.length) {
           search = searchQuery.raitos.includes(item.raito);
           if (search === false) {
             return false;
           }
         }
-        if (searchQuery.scales.length) {
+        const scales = searchQuery.scales.filter((item) => item !== "")
+        if (scales.length) {
           search = searchQuery.scales.includes(item.scale);
           if (search === false) {
             return false;

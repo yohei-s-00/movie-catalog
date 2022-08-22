@@ -10,6 +10,7 @@ export const SearchModal = () => {
   const [open, setOpen] = useState(false);
   const [ attributes, isLoading, error ] = useAttibuteQuery();
   const [searchItem, setSearchItem] = useSearchQuery();
+  
   const handleOpen = () => {
     setOpen(true);
   };

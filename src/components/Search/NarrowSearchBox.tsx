@@ -44,7 +44,6 @@ export const NarrowSearchBox: FC<Props> = ({
   const handleReset = () => {
     reset();
     setSearchItem(initValue);
-    console.log(searchItem);
   };
 
   const handleSearch: SubmitHandler<Attribute> = (data) => {
