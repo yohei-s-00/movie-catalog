@@ -1,12 +1,5 @@
 import { useSteps } from "@hooks/libs";
-import {
-  Box,
-  Button,
-  Container,
-  Step,
-  StepLabel,
-  Stepper,
-} from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AddMovieConfigurationForm } from "./AddMovieConfigurationForm";
 import { AddMovieConfilmForm } from "./AddMovieConfilmForm";
@@ -14,14 +7,14 @@ import { AddMovieDetailForm } from "./AddMovieDetailForm";
 import { useAttibuteQuery, useMovieMutation } from "@hooks/firestore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { movieSchema, MovieSchema } from "src/validations/movieInput";
-import UndoIcon from "@mui/icons-material/Undo";
-import RedoIcon from "@mui/icons-material/Redo";
 import { useAddImageStorage } from "@hooks/firestorage";
 import { serverTimestamp } from "firebase/firestore";
 import { PaperContainer } from "@components/UI/Box/PaperContainer";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useLink } from "@hooks/page";
 import { reducer } from "src/utility";
+import { StepButton } from "@components/UI/Button/StepButton";
+import { SubmitButton } from "@components/UI/Button/SubmitButton";
+import { StepHead } from "@components/UI/Display/StepHead";
 
 const formDefaultValue: MovieSchema = {
   title: "",
@@ -53,7 +46,7 @@ const formDefaultValue: MovieSchema = {
 const stepItems = ["動画詳細登録", "構成表詳細登録", "確認"];
 
 export const AddMovieFormContent = () => {
-  const { data, isLoading, error } = useAttibuteQuery();
+  const [attributes, isLoading, error] = useAttibuteQuery();
   const mutation = useMovieMutation();
   const storageMutate = useAddImageStorage();
   const [step, next, back] = useSteps(0);
@@ -118,7 +111,7 @@ export const AddMovieFormContent = () => {
           configuration: addConfiguration,
           dlNumber: 0,
           materials: detailNumber,
-          remarks: "",
+          remarks: data.remarks,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });
@@ -129,6 +122,7 @@ export const AddMovieFormContent = () => {
     }
     mutateMovie();
   };
+
   return (
     <form
       onSubmit={handleSubmit((data) => {
@@ -140,48 +134,21 @@ export const AddMovieFormContent = () => {
       })}
     >
       <PaperContainer title="コンテンツ登録">
-        <Stepper activeStep={step}>
-          {stepItems.map((item) => (
-            <Step key={item}>
-              <StepLabel>{item}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+        <StepHead step={step} stepItems={stepItems} />
 
         <Box>
-          {step === 0 &&
-            data &&
-            data.docs.map((doc) => (
-              <AddMovieDetailForm
-                control={control}
-                key={doc.id}
-                data={doc.data()}
-              />
-            ))}
+          {step === 0 && attributes && (
+            <AddMovieDetailForm control={control} data={attributes} />
+          )}
           {step === 1 && (
             <AddMovieConfigurationForm control={control} watch={watch} />
           )}
           {step === 2 && <AddMovieConfilmForm getValues={getValues} />}
         </Box>
-        <Box textAlign={"right"}>
-          {step >= 1 && (
-            <Button onClick={back}>
-              <UndoIcon />
-              戻る
-            </Button>
-          )}
-          {step <= 1 && (
-            <Button onClick={next}>
-              次へ
-              <RedoIcon />
-            </Button>
-          )}
-        </Box>
+        <StepButton step={step} next={next} back={back} />
       </PaperContainer>
       <Container maxWidth="lg">
-        <Button variant="contained" type="submit">
-          {mutation.isLoading ? "loading..." : "コンテンツ新規追加"}
-        </Button>
+        <SubmitButton isLoading={mutation.isLoading} label={"コンテンツ新規登録"}/>
       </Container>
     </form>
   );

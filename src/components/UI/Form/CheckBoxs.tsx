@@ -12,6 +12,7 @@ export type CheckBoxProps = {
   items: string[];
   label?: string;
   error?: string;
+  row?: boolean;
 };
 
 type Props = CheckBoxProps & {
@@ -23,6 +24,7 @@ export const CheckBoxs: FC<Props> = ({
   items,
   label,
   error,
+  row,
   onChange,
   value,
 }) => {
@@ -31,19 +33,20 @@ export const CheckBoxs: FC<Props> = ({
     const valueCopy = [...values];
     valueCopy[index] = e.target.checked ? e.target.value : null;
     const filterValue = valueCopy.map((val) => {
-      if(val){
-        return val
-      }else{
-        return '';
+      if (val) {
+        return val;
+      } else {
+        return "";
       }
-    })
+    });
     onChange(filterValue);
     setValues(filterValue);
   };
+  
   return (
     <FormControl>
       {label && <FormLabel>{label}</FormLabel>}
-      <FormGroup row>
+      <FormGroup row={row}>
         {items.map((item, index) => (
           <FormControlLabel
             key={item}

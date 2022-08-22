@@ -1,9 +1,25 @@
-import { EditMovieContainer } from "@components/Edit/EditMovieContainer"
+import { EditMovieFormContent } from "@components/Edit/EditMovieFormContent";
+import { useGetMovieQuery } from "@hooks/firestore";
+import { useParams } from "react-router-dom";
 
 export const EditContent = () => {
-  return(
+  const { id } = useParams();
+  const { movie, isLoading, error } = useGetMovieQuery(id);
+  if (isLoading) {
     <>
-      <EditMovieContainer />
+      ...loading
     </>
-  )
-}
+  }
+  if (error) {
+    <>
+      error: {error}
+    </>
+  }
+  return (
+    <>
+      {movie && id &&
+        <EditMovieFormContent items={movie} id={id}/>
+      }
+    </>
+  );
+};

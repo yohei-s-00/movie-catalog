@@ -5,10 +5,10 @@ type Props = {
   children: ReactNode;
   title: string;
 };
-export const AddMovieFormWrapper: FC<Props> = ({ children, title }) => {
+export const FormWrapper: FC<Props> = ({ children, title }) => {
   return (
     <Box>
-      <Typography variant="h5" gutterBottom sx={{py: 4}}>
+      <Typography variant="h5" gutterBottom sx={{ py: 4 }}>
         {title}
       </Typography>
       <Box>{children}</Box>

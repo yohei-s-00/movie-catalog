@@ -5,11 +5,11 @@ import { FC } from "react";
 import { Control, useFieldArray, UseFormWatch } from "react-hook-form";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { MovieSchema } from "src/validations/movieInput";
+import { MovieInputSchema, MovieSchema } from "src/validations/movieInput";
 
 type Props = {
-  control: Control<MovieSchema, any>;
-  watch: UseFormWatch<MovieSchema>;
+  control: Control<MovieInputSchema, any>;
+  watch: UseFormWatch<MovieInputSchema>;
   nestIndex: number;
 };
 

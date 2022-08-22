@@ -8,7 +8,7 @@ import { PDFMovieConfiguration } from "./PDFMovieConfiguration";
 
 type Props = {
   title: string;
-  PDFValue: MovieSchema | MovieItem;
+  PDFValue: MovieSchema | MovieItem | Movie;
   mutate?: UseMutateFunction<
     void,
     FirestoreError,

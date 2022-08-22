@@ -1,25 +1,16 @@
-import { DataTabel } from "@components/UI/Tabel/DataTabel";
-import { useMovieQuery } from "@hooks/firestore";
+import { useMovieItem } from "@hooks/globalstate";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { MovieDataTabel, TableHeadColms } from "./MovieDataTabel";
 
 export const EditMovieContainer = () => {
-  const { data, isLoading, error } = useMovieQuery();
-  const movieColms = [
-    {field: 'title', headerName: 'タイトル', width: 70},
-    {field: 'scale', headerName: '尺', width: 70},
-    {field: 'materials', headerName: '素材数', width: 70},
-    {field: 'raito', headerName: '比率', width: 70},
-  ]
-  // useEffect(() => {
-  //   if(data){
-  //     const movieRows = data.docs.map((doc) => {
-  //       const rows = {
-  //         field: '', headerName: '', width: 
-  //       }
-  //     });
-  //   }
-  // },[isLoading])
+  const [data, isLoading, error] = useMovieItem();
+  const movieColms: TableHeadColms = [
+    { field: "title", headerName: "タイトル", width: 70 },
+    { field: "scale", headerName: "尺", width: 70 },
+    { field: "materials", headerName: "素材数", width: 70 },
+    { field: "raito", headerName: "比率", width: 70 },
+    { field: "delete", headerName: "削除", width: 70 },
+  ];
   if (isLoading) {
     return (
       <Box sx={{ display: "flex" }}>
@@ -36,7 +27,7 @@ export const EditMovieContainer = () => {
   }
   return (
     <div>
-      {data && <DataTabel/>}
+      <MovieDataTabel data={data} headerColms={movieColms} />
     </div>
   );
 };

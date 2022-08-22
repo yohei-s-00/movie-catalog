@@ -2,7 +2,6 @@ import { Button, Box, Divider } from "@mui/material";
 import { FC, useEffect, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ChechBoxsField } from "@components/UI/Form/ChechBoxsField";
-import { useSearchQuery, useSearchQueryReset } from "@hooks/globalstate";
 import { SetterOrUpdater } from "recoil";
 
 type Props = {

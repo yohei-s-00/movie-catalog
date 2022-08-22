@@ -9,19 +9,19 @@ import {
   TableRow,
 } from "@mui/material";
 import { FC } from "react";
-import { UseFormGetValues, UseFormHandleSubmit } from "react-hook-form";
-import { AddMovieFormWrapper } from "./AddMovieFormWrapper";
+import { UseFormGetValues } from "react-hook-form";
 import { PDFMovieConfigurationLink } from "@components/PDF/PDFMovieConfigurationLink";
-import { MovieSchema } from "src/validations/movieInput";
+import { MovieInputSchema, MovieSchema } from "src/validations/movieInput";
+import { FormWrapper } from "@components/UI/Form/FormWrapper";
 
 type Props = {
-  getValues: UseFormGetValues<MovieSchema>;
+  getValues: UseFormGetValues<MovieInputSchema>;
 };
 
 export const AddMovieConfilmForm: FC<Props> = ({ getValues }) => {
   const formValue = getValues();
   return (
-    <AddMovieFormWrapper title="登録確認">
+    <FormWrapper title="登録確認">
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -74,6 +74,6 @@ export const AddMovieConfilmForm: FC<Props> = ({ getValues }) => {
         </Table>
       </TableContainer>
       <PDFMovieConfigurationLink title="PDFを確認する" PDFValue={formValue} />
-    </AddMovieFormWrapper>
+    </FormWrapper>
   );
 };

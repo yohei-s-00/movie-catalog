@@ -1,29 +1,74 @@
 import {
   useFirestoreCollectionMutation,
+  useFirestoreDocument,
   useFirestoreDocumentDeletion,
   useFirestoreDocumentMutation,
   useFirestoreQuery,
+  useFirestoreQueryData,
 } from "@react-query-firebase/firestore";
-import { collection, doc, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  query,
+  orderBy,
+  FirestoreError,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { firestore } from "src/firebase/firebase";
 import { converter } from "../firebase/firestore";
 
 export const useMovieQuery = () => {
-  const ref = query(collection(firestore, "movies")).withConverter(
-    converter<Movie>()
-  );
+  const ref = query(
+    collection(firestore, "movies"),
+    orderBy("createdAt", "desc")
+  ).withConverter(converter<Movie>());
   const q = useFirestoreQuery<Movie>(["movies"], ref);
   const { data, isLoading, error } = q;
   return { data, isLoading, error };
 };
 
-export const useAttibuteQuery = () => {
+export const useGetMovieQuery = (id: string | undefined) => {
+  const [movie, setMovie] = useState<Movie>();
+  if (id) {
+    const ref = doc(firestore, "movies", id).withConverter(converter<Movie>());
+    const q = useFirestoreDocument<Movie>(["movies", id], ref);
+    const { data, isLoading, error } = q;
+    useEffect(() => {
+      if (data) {
+        const movieItem = data.data();
+        if (movieItem) {
+          setMovie(movieItem);
+        }
+      }
+    }, [isLoading]);
+    return { movie, isLoading, error };
+  } else {
+    const isLoading = true;
+    const error = "動画がありません。";
+    return { movie, isLoading, error };
+  }
+};
+
+export const useAttibuteQuery = (): [
+  Attribute | undefined,
+  boolean,
+  FirestoreError | null
+] => {
+  const [attributes, setAttributes] = useState<Attribute>();
   const ref = query(collection(firestore, "attributes")).withConverter(
     converter<Attribute>()
   );
   const q = useFirestoreQuery<Attribute>(["attributes"], ref);
   const { data, isLoading, error } = q;
-  return { data, isLoading, error };
+  useEffect(() => {
+    if (data) {
+      data.docs.map((item) => {
+        const data = item.data();
+        setAttributes(data);
+      });
+    }
+  }, [isLoading]);
+  return [attributes, isLoading, error];
 };
 
 export const useMovieMutation = () => {

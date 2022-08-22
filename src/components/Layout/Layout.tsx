@@ -6,11 +6,11 @@ import { ContentContainer } from "./ContentContainer";
 
 export const Layout = () => {
   return (
-    <>
+    <Box sx={{height: "100vh",display: "flex", flexDirection: "column"}}>
       <Header />
       <ContentContainer>
         <Outlet />
       </ContentContainer>
-    </>
+    </Box>
   );
 };

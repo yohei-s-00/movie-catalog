@@ -127,7 +127,7 @@ Font.registerHyphenationCallback((word) =>
 );
 
 type Props = {
-  formValue: MovieSchema | MovieItem;
+  formValue: MovieSchema | MovieItem | Movie;
 };
 
 export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {

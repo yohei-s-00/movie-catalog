@@ -5,8 +5,9 @@ import { Admin } from "@components/Page/Admin";
 import { Home } from "@components/Page/Home";
 import { AddContent } from "@components/Page/AddContent";
 import { Login } from "@components/Page/Login";
-import { EditContent } from "@components/Page/EditContent";
+import { Edit } from "@components/Page/Edit";
 import { AuthRouteGuard } from "./AuthRouteGuard";
+import { EditContent } from "@components/Page/EditContent";
 
 export const RouterConfig: FC = () => {
   return (
@@ -35,6 +36,14 @@ export const RouterConfig: FC = () => {
               />
               <Route
                 path="editContent"
+                element={
+                  <AuthRouteGuard redirect="/">
+                    <Edit />
+                  </AuthRouteGuard>
+                }
+              />
+              <Route
+                path="editContent/:id"
                 element={
                   <AuthRouteGuard redirect="/">
                     <EditContent />

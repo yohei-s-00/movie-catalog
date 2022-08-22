@@ -7,7 +7,7 @@ type Props = {
 export const ContentContainer: FC<Props> = ({ children }) => {
 
   return (
-    <Box>
+    <Box component="main">
       <Container sx={{ height: "100vh" }} maxWidth="lg">
         <Box py={4}>{children}</Box>
       </Container>

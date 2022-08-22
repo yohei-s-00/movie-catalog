@@ -15,22 +15,17 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { FC, useState } from "react";
-import {
-  Control,
-  useFieldArray,
-  UseFormSetValue,
-  UseFormWatch,
-} from "react-hook-form";
-import { AddMovieFormWrapper } from "./AddMovieFormWrapper";
+import { Control, FieldValues, useFieldArray, UseFormWatch } from "react-hook-form";
 import { ArrayTextAreaFields } from "./ArrayTextAreaFields";
 import { UploadInputField } from "@components/UI/Form/UploadInputField";
 import { SelectField } from "@components/UI/Form/SelectField";
-import { MovieSchema } from "src/validations/movieInput";
+import { MovieInputSchema, MovieItemSchema, MovieSchema } from "src/validations/movieInput";
 import { RESOLUTION_IMAGE } from "src/public/libs/movie";
+import { FormWrapper } from "@components/UI/Form/FormWrapper";
 
 type Props = {
-  watch: UseFormWatch<MovieSchema>;
-  control: Control<MovieSchema, any>;
+  watch: UseFormWatch<MovieInputSchema>;
+  control: Control<MovieInputSchema>;
 };
 
 export const AddMovieConfigurationForm: FC<Props> = ({ control, watch }) => {
@@ -67,7 +62,7 @@ export const AddMovieConfigurationForm: FC<Props> = ({ control, watch }) => {
     });
   };
   return (
-    <AddMovieFormWrapper title="構成表詳細登録">
+    <FormWrapper title="構成表詳細登録">
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -155,6 +150,6 @@ export const AddMovieConfigurationForm: FC<Props> = ({ control, watch }) => {
         <AddBoxIcon />
         行を追加
       </Button>
-    </AddMovieFormWrapper>
+    </FormWrapper>
   );
 };

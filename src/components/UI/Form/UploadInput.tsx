@@ -43,7 +43,20 @@ export const UploadInput: FC<Props> = ({
           onBlur={onBlur}
         />
         {value ? (
-          accept === "image" ? (
+          typeof value === "string" ? (
+            accept === "image" ? (
+              <Image
+                src={`gs://douage-dev.appspot.com/${value}`}
+                alt="サムネイル"
+              />
+            ) : (
+              <video
+                style={{ maxWidth: "100%" }}
+                controls
+                src={`gs://douage-dev.appspot.com/${value}`}
+              />
+            )
+          ) : accept === "image" ? (
             <Image
               src={window.URL.createObjectURL(new Blob([value]))}
               alt="サムネイル"

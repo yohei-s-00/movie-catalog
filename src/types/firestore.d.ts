@@ -20,7 +20,6 @@ type MovieItem = Movie & {
 
 type UpdateMovie = Partial<Movie>
 
-
 type Configuration = {
   scene: number;
   time: number;
@@ -40,9 +39,4 @@ type Attribute = {
   scales: string[];
 };
 
-type AttributeQuery = {
-  categories?: string[];
-  platforms?: string[];
-  raitos?: string[];
-  scales?: string[];
-};
+type AttributeQuery = Partial<Attribute>

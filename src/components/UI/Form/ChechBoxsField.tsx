@@ -13,7 +13,7 @@ export type RhfdCheckBoxProps<T extends FieldValues> = CheckBoxProps &
 export const ChechBoxsField = <T extends FieldValues>(
   props: RhfdCheckBoxProps<T>
 ) => {
-  const { name, control, label, items } = props;
+  const { name, control, label, items, row } = props;
   const {
     field: { ref, ...rest },
     formState: { errors },
@@ -22,6 +22,7 @@ export const ChechBoxsField = <T extends FieldValues>(
     <CheckBoxs
       label={label}
       items={items}
+      row={row}
       {...rest}
       error={
         errors[name] &&
