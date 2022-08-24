@@ -4,7 +4,6 @@ import {
   useFirestoreDocumentDeletion,
   useFirestoreDocumentMutation,
   useFirestoreQuery,
-  useFirestoreQueryData,
 } from "@react-query-firebase/firestore";
 import {
   collection,
