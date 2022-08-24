@@ -5,7 +5,7 @@ import { FC } from "react";
 import { Control, useFieldArray, UseFormWatch } from "react-hook-form";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { MovieInputSchema, MovieSchema } from "src/validations/movieInput";
+import { MovieInputSchema } from "src/validations/movieInput";
 
 type Props = {
   control: Control<MovieInputSchema, any>;

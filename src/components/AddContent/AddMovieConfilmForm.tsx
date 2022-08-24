@@ -11,7 +11,7 @@ import {
 import { FC } from "react";
 import { UseFormGetValues } from "react-hook-form";
 import { PDFMovieConfigurationLink } from "@components/PDF/PDFMovieConfigurationLink";
-import { MovieInputSchema, MovieSchema } from "src/validations/movieInput";
+import { MovieInputSchema } from "src/validations/movieInput";
 import { FormWrapper } from "@components/UI/Form/FormWrapper";
 
 type Props = {

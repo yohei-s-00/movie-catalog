@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { FC } from "react";
 import { Control } from "react-hook-form";
 import { RESOLUTION_SIZE } from "src/public/libs/movie";
-import { MovieInputSchema, MovieSchema } from "src/validations/movieInput";
+import { MovieInputSchema } from "src/validations/movieInput";
 
 type Props = {
   data: Attribute;
