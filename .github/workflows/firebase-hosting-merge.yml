@@ -17,4 +17,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DOUAGE_3F483 }}'
           channelId: live
-          projectId: douage
+          projectId: douage-3f483
