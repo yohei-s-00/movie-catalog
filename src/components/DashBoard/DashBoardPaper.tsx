@@ -1,5 +1,5 @@
 import { AppLink } from "@components/UI/Link/AppLink";
-import { Card, CardContent, Paper, Typography } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { FC } from "react";
 

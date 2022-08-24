@@ -1,6 +1,5 @@
 import { InputField } from "@components/UI/Form/InputField";
 import {
-  Box,
   Button,
   Grid,
   IconButton,
@@ -15,11 +14,11 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { FC, useState } from "react";
-import { Control, FieldValues, useFieldArray, UseFormWatch } from "react-hook-form";
+import { Control, useFieldArray, UseFormWatch } from "react-hook-form";
 import { ArrayTextAreaFields } from "./ArrayTextAreaFields";
 import { UploadInputField } from "@components/UI/Form/UploadInputField";
 import { SelectField } from "@components/UI/Form/SelectField";
-import { MovieInputSchema, MovieItemSchema, MovieSchema } from "src/validations/movieInput";
+import { MovieInputSchema } from "src/validations/movieInput";
 import { RESOLUTION_IMAGE } from "src/public/libs/movie";
 import { FormWrapper } from "@components/UI/Form/FormWrapper";
 
