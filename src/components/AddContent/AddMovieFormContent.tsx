@@ -59,11 +59,11 @@ export const AddMovieFormContent = () => {
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
-    // resolver: zodResolver(movieSchema),
+    resolver: zodResolver(movieSchema),
     defaultValues: formDefaultValue,
   });
-  // console.log(IsError());
 
+  // サブミット処理
   const onSubmit: SubmitHandler<MovieSchema> = (data) => {
     const detailItems = data.configuration.map((item) => {
       return item.imgVolume;

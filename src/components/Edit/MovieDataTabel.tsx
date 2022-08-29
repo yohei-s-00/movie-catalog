@@ -1,6 +1,5 @@
 import { useLink } from "@hooks/page";
 import {
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -9,8 +8,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { FC } from "react";
+import { DeleteMovie } from "./DeleteMovie";
 
 export type TableHeadColms = {
   field: string;
@@ -25,9 +24,7 @@ type Props = {
 
 export const MovieDataTabel: FC<Props> = ({ data, headerColms }) => {
   const link = useLink();
-  const handleDelete = (id: string) => {
 
-  }
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -42,15 +39,13 @@ export const MovieDataTabel: FC<Props> = ({ data, headerColms }) => {
           {data.map((item) => {
             const { id, title, scale, materials, raito } = item;
             return (
-              <TableRow hover key={id} onClick={()=>link(`${id}`)}>
+              <TableRow hover key={id} onClick={() => link(`${id}`)}>
                 <TableCell>{title}</TableCell>
                 <TableCell>{scale}</TableCell>
                 <TableCell>{materials}</TableCell>
                 <TableCell>{raito}</TableCell>
                 <TableCell>
-                  <IconButton onClick={() => handleDelete(id)} size="small">
-                    <DeleteForeverIcon />
-                  </IconButton>
+                  <DeleteMovie id={id} />
                 </TableCell>
               </TableRow>
             );
