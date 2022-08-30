@@ -23,7 +23,7 @@ export const PDFMovieConfigurationLink: FC<Props> = ({
   mutate,
 }) => {
   const [instance, updateInstance] = usePDF({
-    document: <PDFMovieConfiguration formValue={PDFValue} />,
+    document: <PDFMovieConfiguration value={PDFValue} />,
   });
   const handleIncrement = () => {
     if (mutate) {

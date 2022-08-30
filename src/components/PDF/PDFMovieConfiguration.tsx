@@ -120,6 +120,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     backgroundColor: "#999999",
   },
+  image: {
+    width: "100%",
+    maxWidth: "100%",
+    height: "auto"
+  },
 });
 
 Font.registerHyphenationCallback((word) =>
@@ -127,10 +132,10 @@ Font.registerHyphenationCallback((word) =>
 );
 
 type Props = {
-  formValue: MovieSchema | MovieItem | Movie;
+  value: MovieSchema | MovieItem | Movie;
 };
 
-export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
+export const PDFMovieConfiguration: FC<Props> = ({ value }) => {
   const {
     title,
     category,
@@ -140,7 +145,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
     configuration,
     materials,
     resolution,
-  } = formValue;
+  } = value;
 
   const sceneNumber = configuration.length;
   function getMaterial() {
@@ -152,7 +157,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
   }
   const materialNumber = getMaterial();
   return (
-    <Document>
+    <Document title={title}>
       <Page size="A4" style={styles.page}>
         <View style={styles.table}>
           <View style={styles.tableCellHeader}>
@@ -251,7 +256,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                       <PDFImage src={item.preview} />
                     ) : (
                       <Image
-                        style={{ maxWidth: "100%" }}
+                        style={styles.image}
                         src={window.URL.createObjectURL(
                           new Blob([item.preview])
                         )}
@@ -261,16 +266,16 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                 <View style={styles.tableCell}>
                   {item.detail &&
                     (item.detail === "ロゴ素材" ? (
-                      <>
+                      <View>
                         <Text style={styles.grayBox}>画像・動画</Text>
                         <View style={{ marginTop: 5, marginBottom: 5 }}>
                           <Text style={styles.tableCellBodyText}>
                             こちらにロゴ素材 (透過png推奨)が入ります
                           </Text>
                         </View>
-                      </>
+                      </View>
                     ) : (
-                      <>
+                      <View>
                         <Text style={styles.grayBox}>画像・動画</Text>
                         <View style={{ marginTop: 5, marginBottom: 5 }}>
                           <Text style={styles.tableCellBodyText}>
@@ -296,10 +301,10 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                             </Text>
                           )}
                         </View>
-                      </>
+                      </View>
                     ))}
                   {item.textAreas[0].text !== "" && (
-                    <>
+                    <View>
                       <Text style={styles.grayBox}>テキスト</Text>
                       {item.textAreas.map((textArea, i) => (
                         <View key={i}>
@@ -319,7 +324,7 @@ export const PDFMovieConfiguration: FC<Props> = ({ formValue }) => {
                           </View>
                         </View>
                       ))}
-                    </>
+                    </View>
                   )}
                 </View>
               </View>
