@@ -38,9 +38,11 @@ export const EditMovieFormContent: FC<Props> = ({ items, id }) => {
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
-    // resolver: zodResolver(movieItemSchema),
+    resolver: zodResolver(movieItemSchema),
     defaultValues: {...items},
   });
+  
+  // サブミット処理
   const onSubmit: SubmitHandler<MovieInputSchema> = (data) => {
     const detailItems = data.configuration.map((item) => {
       return item.imgVolume;
@@ -102,6 +104,7 @@ export const EditMovieFormContent: FC<Props> = ({ items, id }) => {
     }
     mutateMovie();
   };
+  
   return (
     <form
       onSubmit={handleSubmit((data) => {

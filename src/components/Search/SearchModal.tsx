@@ -1,8 +1,7 @@
-import { Button, Box, Typography, Chip } from "@mui/material";
+import { Button, Box, Chip } from "@mui/material";
 import { useState } from "react";
 import { NarrowSearchBox } from "@components/Search/NarrowSearchBox";
-import { SearchTitle } from "../UI/Typography/SearchTitle";
-import { AppModal } from "./AppModal";
+import { AppModal } from "@components/UI/Modal/AppModal";
 import { useAttibuteQuery } from "@hooks/firestore";
 import { useSearchQuery } from "@hooks/globalstate";
 

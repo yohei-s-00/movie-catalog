@@ -1,6 +1,5 @@
 import {
   Button,
-  Modal,
   Box,
   Typography,
   Divider,
@@ -17,9 +16,8 @@ import { FC } from "react";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { AppModal } from "./AppModal";
-import { CenterFlexBox } from "../UI/Box/CenterFlexBox";
+import { AppModal } from "@components/UI/Modal/AppModal";
+import { CenterFlexBox } from "@components/UI/Box/CenterFlexBox";
 import { useStoragePath } from "@hooks/firestorage";
 import { PDFMovieConfigurationLink } from "@components/PDF/PDFMovieConfigurationLink";
 import { useUpdateMovieMutation } from "@hooks/firestore";
@@ -31,18 +29,17 @@ const style = {
 type Props = {
   handleClose: () => void;
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   data: MovieItem;
 };
 
 export const MovieDetailModal: FC<Props> = ({
   handleClose,
   open,
-  setOpen,
   data,
 }) => {
-  const [videoPath, { loading }] = useStoragePath(data.movie);
-  const mutation = useUpdateMovieMutation(data.id)
+  const { id, scale, materials, raito, platform, remarks, movie } = data;
+  const [videoPath, { loading }] = useStoragePath(movie);
+  const mutation = useUpdateMovieMutation(id);
 
   return (
     <AppModal open={open} close={handleClose} width={900}>
@@ -98,9 +95,9 @@ export const MovieDetailModal: FC<Props> = ({
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell align="center">{data.scale}</TableCell>
-                  <TableCell align="center">{data.materials}</TableCell>
-                  <TableCell align="center">{data.raito}</TableCell>
+                  <TableCell align="center">{scale}</TableCell>
+                  <TableCell align="center">{materials}</TableCell>
+                  <TableCell align="center">{raito}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -113,7 +110,7 @@ export const MovieDetailModal: FC<Props> = ({
             推奨配信先
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            {data.platform.map((item: string) => {
+            {platform.map((item: string) => {
               if (item) {
                 return <Chip key={item} label={item} variant="outlined" />;
               }
@@ -129,7 +126,7 @@ export const MovieDetailModal: FC<Props> = ({
       </Box>
       <Box sx={{ height: 100, marginTop: 2 }}>
         <Typography variant="h6">特記事項</Typography>
-        <Typography>{data.remarks}</Typography>
+        <Typography>{remarks}</Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button variant="outlined" onClick={() => handleClose()}>
